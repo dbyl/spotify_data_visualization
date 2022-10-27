@@ -1,5 +1,6 @@
 import pandas as pd
 from dask import dataframe as dd
+import time
 
 
 def read_csv_as_dask_dataframe(path):
@@ -37,3 +38,12 @@ def optimize_dataframe(dataframe):
     
     return dataframe
 
+def optimization(path):
+    
+    dask_dataframe = read_csv_as_dask_dataframe(path)
+    dask_dataframe= optimize_types_in_dask_dataframe(dask_dataframe)
+    dataframe = dask_to_pandas_dataframe(dask_dataframe)
+    dataframe = optimize_dataframe(dataframe)
+    
+    return dataframe
+    
