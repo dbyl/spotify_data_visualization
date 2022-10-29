@@ -13,15 +13,19 @@ def read_csv_as_dask_dataframe(path):
 
 def optimize_types_in_dask_dataframe(dask_dataframe):
      
-    to_category_cols = ['title', 'url', 'date', 'artist', 'region', 'trend', 'chart']
+    to_category_cols = ['title', 'url', 'artist', 'region', 'trend', 'chart']
+    to_datetime64_cols = ['date']
     to_int32_cols = ['rank']
-    
+
     for col in to_category_cols:
         dask_dataframe[col] = dask_dataframe[col].astype('category')
-        
+            
     for col in to_int32_cols:
         dask_dataframe[col] = dask_dataframe[col].astype('int32')
-    
+        
+    for col in to_datetime64_cols:
+        dask_dataframe[col] = dask_dataframe[col].astype('datetime64')
+        
     return dask_dataframe
 
 def dask_to_pandas_dataframe(dask_dataframe):
