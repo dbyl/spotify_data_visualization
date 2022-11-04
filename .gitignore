@@ -154,6 +154,7 @@ cython_debug/
 
 # Datasets
 spotify_charts.csv
+csvData
 
 # VSCode
 .vscode
