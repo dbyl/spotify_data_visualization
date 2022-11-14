@@ -1,6 +1,6 @@
 from django.db import models
 
-class SpotifyData:
+class SpotifyData(models.Model):
     
         title = models.CharField(max_length=200)
         rank = models.DecimalField(max_digits=5, decimal_places=2)
@@ -9,4 +9,5 @@ class SpotifyData:
         url = models.CharField(max_length=200)
         region = models.CharField(max_length=50)
         chart = models.CharField(max_length=15)
-        streams = models.BigAutoField()
+        streams = models.DecimalField(max_digits=50, decimal_places=2)
+        
