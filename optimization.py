@@ -50,4 +50,11 @@ def optimization(path):
     dataframe = optimize_dataframe(dataframe)
     
     return dataframe
+
+def creating_cleaned_dataframe(path):
     
+    dataframe = optimization(path)
+    
+    return dataframe.to_csv('cleaned_data.csv', index = False)
+
+
