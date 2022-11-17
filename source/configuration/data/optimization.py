@@ -26,6 +26,9 @@ def optimize_types_in_dask_dataframe(dask_dataframe):
     for col in to_datetime64_cols:
         dask_dataframe[col] = dask_dataframe[col].astype('datetime64')
         
+    dask_dataframe = dask_dataframe.drop('trend', axis=1)
+    dask_dataframe = dask_dataframe.drop('url', axis=1)
+        
     return dask_dataframe
 
 def dask_to_pandas_dataframe(dask_dataframe):
@@ -56,5 +59,4 @@ def creating_cleaned_dataframe(path):
     dataframe = optimization(path)
     
     return dataframe.to_csv('cleaned_data.csv', index = False)
-
 
