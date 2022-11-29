@@ -13,7 +13,7 @@ def command():
 
 
 @pytest.mark.django_db
-def test_load_spotify_datas_to_db_with_succeed(command):
+def test_load_spotify_datas_to_db_with_succeed(tmp_path, command):
 
     filepath = Path("spotify_data/tests/fixtures/test_csv.csv")
     spotify_data = command.handle(filepath)
