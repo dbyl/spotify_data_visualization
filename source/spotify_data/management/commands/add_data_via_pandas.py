@@ -1,3 +1,5 @@
+import logging
+import logging.config
 import csv
 import datetime
 
@@ -19,7 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         path = options["input"]
-
+        logging.info(f"Preparing data from {path}...")
         df = self.read_csv(path)
         self.load_to_db(df)
 

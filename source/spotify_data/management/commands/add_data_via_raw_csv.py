@@ -1,3 +1,5 @@
+import logging
+import logging.config
 import csv
 import datetime
 
@@ -19,6 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         start_time = timezone.now()
         filepath = options["filepath"]
+        logging.info(f"Preparing data from {filepath}...")
 
         try:
             with open(filepath, "r") as csv_file:
@@ -44,7 +47,7 @@ class Command(BaseCommand):
                     except Exception as e:
                         bad += 1
                         current_time = datetime.datetime.now()
-                        with open("data_load_logging2.txt", "w") as bad_row:
+                        with open("data_load_logging.txt", "w") as bad_row:
                             bad_row.write(
                                 f"Error message: {e} \n"
                                 + f"time: {current_time}, \n"

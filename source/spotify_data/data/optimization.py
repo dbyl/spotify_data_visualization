@@ -66,5 +66,5 @@ def creating_cleaned_dataframe(path):
 
 
 creating_cleaned_dataframe(
-    "/home/damian/spotify_data_visualization/source/configuration/data/spotify_charts.csv"
+    "/home/damian/spotify_data_visualization/source/spotify_data/data/spotify_charts.csv"
 )

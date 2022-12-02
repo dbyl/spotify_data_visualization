@@ -45,7 +45,7 @@ The first thing to do is to clone the repository:
 
 ```sh
 $ git clone https://github.com/dbyl/spotify_data_visualization
-$ cd Spotify_Data_Visualization
+$ cd spotify_data_visualization
 ```
 
 This project requires Python 3.6 or later.
@@ -62,7 +62,7 @@ Create a .env file in project root directory (source). The file format can be un
 ```sh
 DEBUG=True
 SECRET_KEY=your-secret-key # generate your own secret key
-DATABASE_URL=spotify_sqlite_database
+DATABASE_NAME=spotify_sqlite_database
 ALLOWED_HOSTS=127.0.0.1,localhost
 ```
 
