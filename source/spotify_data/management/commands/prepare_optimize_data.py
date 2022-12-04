@@ -40,8 +40,6 @@ class Command(BaseCommand):
         dataframe = self.optimize_types_in_pandas(dataframe)
         dataframe = self.drop_na(dataframe)
         self.save_file_as_csv(dataframe, path, output)
-        print(dataframe.info(memory_usage='deep'))
-
 
     def read_csv_dask_dataframe(self, path):
         # Load a csv into a Dask Dataframe (due to it's size) and return it
@@ -96,12 +94,13 @@ class Command(BaseCommand):
 
         return dataframe
 
-    def save_file_as_csv(self, dataframe, path, output):
+    def save_file_as_csv(self, dataframe, path, output, filename = "optimized_data.csv"):
         try:
-            dataframe[0:100].to_csv(f"/home/damian/spotify_data_visualization/source/spotify_data/data/cleaned_data_sample.csv", sep=",")
+            dataframe.to_csv(f"{Path(output)}/{filename}", sep=",", index=False)
             logging.info(
-                f"Prepared new csv file: {path} for {len(dataframe)} spotify_data \n"
+                f"Prepared new csv file: {path} - {filename} for {len(dataframe)} spotify_data \n"
             )
+            logging.info(dataframe.info(memory_usage='deep'))
         except OSError as e:
             raise NotExistingDirectoryException(
                 "Cannot save file into a non-existent directory"

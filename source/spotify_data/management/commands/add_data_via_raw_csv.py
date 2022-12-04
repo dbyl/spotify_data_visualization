@@ -16,15 +16,17 @@ class Command(BaseCommand):
     help = "A command to add data from a csv file to the database."
 
     def add_arguments(self, parser):
-        parser.add_argument("filepath", type=str)
+        parser.add_argument("input", type=str, help='Choose path with input csv files')
 
-    def handle(self, *args, **options):
+    def handle(self, input, *args, **options):
+
+        logging.info(f"Preparing data from {input}...")
+        self.load_to_db(input)
+    
+    def load_to_db(self, path):
         start_time = timezone.now()
-        filepath = options["filepath"]
-        logging.info(f"Preparing data from {filepath}...")
-
         try:
-            with open(filepath, "r") as csv_file:
+            with open(path, "r") as csv_file:
                 data = csv.reader(csv_file)
                 packet_spotify_data = []
                 bad = -1  # first row is a header
@@ -61,7 +63,7 @@ class Command(BaseCommand):
                                 + "-" * 30
                                 + "\n"
                             )
-                print(bad)
+                logging.info(f"Failure numbers: {bad}")
                 if packet_spotify_data:
                     SpotifyData.objects.bulk_create(packet_spotify_data)
         except FileNotFoundError as e:
