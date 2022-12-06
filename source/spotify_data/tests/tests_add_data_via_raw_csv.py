@@ -22,3 +22,7 @@ def test_load_spotify_datas_to_db_with_succeed(command, **options):
     assert record_1.title == "Chantaje (feat. Maluma)"
 
     record_1.delete()
+
+
+
+
