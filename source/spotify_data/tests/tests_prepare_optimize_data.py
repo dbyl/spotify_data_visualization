@@ -5,7 +5,7 @@ from dask import dataframe as dd
 import pytest
 import numpy as np
 
-from spotify_data.exceptions import NoFilesException
+from spotify_data.exceptions import NoFilesException, NotExistingDirectoryException
 from spotify_data.management.commands.prepare_optimize_data import Command
 
 from spotify_data.constants import (DASK_COLUMNS_TO_DROP,    
@@ -74,11 +74,9 @@ def test_fillna_streams(command):
 
 
 def test_pandas_data_optimization_types(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('fixtures/to_test_optimize_types_in_pandas.csv')
     dd = command.read_csv_dask_dataframe(path)
-    dd = command.optimize_types_in_dask(dd)
     df = command.dask_to_pandas(dd)
-    df = command.fill_na(df)
     df = command.optimize_types_in_pandas(df)
 
     for column in PANDAS_COLUMNS_TO_INT32:
@@ -86,12 +84,9 @@ def test_pandas_data_optimization_types(command):
 
 
 def test_drop_na(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('fixtures/to_test_drop_na.csv')
     dd = command.read_csv_dask_dataframe(path)
-    dd = command.optimize_types_in_dask(dd)
     df = command.dask_to_pandas(dd)
-    df = command.fill_na(df)
-    df = command.optimize_types_in_pandas(df)
 
     assert len(df.index) == 50
 
@@ -99,5 +94,53 @@ def test_drop_na(command):
 
     assert len(df.index) == 47
 
-def test_save_correct_file(path, command):
-    pass
+
+def test_save_good_file(tmp_path, command):
+    path = Path('fixtures/to_test_save_file.csv')
+    dd = command.read_csv_dask_dataframe(path)
+    df = command.dask_to_pandas(dd)
+
+    dir_path = tmp_path / "data_temp"
+    filename = "file_temp.csv"
+    file_path = dir_path / f"{filename}"
+    dir_path.mkdir()
+    command.save_file_as_csv(df, file_path, dir_path, filename)
+  
+    assert Path.is_file(file_path) and Path.exists(Path(file_path))
+
+
+def test_save_file_wrong_dir(tmp_path, command):
+    path = Path('fixtures/to_test_save_file.csv')
+    dd = command.read_csv_dask_dataframe(path)
+    df = command.dask_to_pandas(dd)
+
+    dir_path = tmp_path / Path("data_wrong")
+    filename = "file_temp.csv"
+    file_path = dir_path / f"{filename}"
+
+    with pytest.raises(
+        NotExistingDirectoryException,
+        match="Cannot save file into a non-existent directory"
+    ):
+        command.save_file_as_csv(df, file_path, dir_path, filename)
+
+
+def test_handle_input_right_path(tmp_path, command):
+    path = Path('fixtures/unoptimized_data_sample.csv')
+    output = tmp_path / "data_temp"
+    output.mkdir()
+    filename = "file_temp.csv"
+    file_path = output / f"{filename}"
+
+    command.handle(path, output, filename)
+
+    assert Path.is_file(file_path)
+
+def test_handle_input_wrong_path(tmp_path, command):
+    path = Path('non_existing_directory/unoptimized_data_sample.csv')
+    output = tmp_path / "data_temp"
+    output.mkdir()
+    filename = "file_temp.csv"
+
+    with pytest.raises(NoFilesException, match="No such file or directory"):
+        command.handle(path, output, filename)

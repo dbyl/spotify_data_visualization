@@ -29,7 +29,11 @@ class Command(BaseCommand):
             "output", type=str, help="Directory path with output csv files"
         )
 
-    def handle(self, path, output, *args, **options):
+        parser.add_argument(
+            "filename", type=str, help="New file name"
+        )
+
+    def handle(self, path, output, filename, *args, **options):
 
         logging.info(f"Preparing data from {path}...")
         dask_dataframe = self.read_csv_dask_dataframe(path)
@@ -39,11 +43,15 @@ class Command(BaseCommand):
         dataframe = self.fill_na(dataframe)
         dataframe = self.optimize_types_in_pandas(dataframe)
         dataframe = self.drop_na(dataframe)
-        self.save_file_as_csv(dataframe, path, output)
+        self.save_file_as_csv(dataframe, path, output, filename)
 
     def read_csv_dask_dataframe(self, path):
         # Load a csv into a Dask Dataframe (due to it's size) and return it
-        dask_dataframe = dd.read_csv(path, dtype=object)
+        
+        try:
+            dask_dataframe = dd.read_csv(path, dtype=object)
+        except FileNotFoundError as e:
+            raise NoFilesException("No such file or directory") from e
 
         return dask_dataframe
     
@@ -94,7 +102,7 @@ class Command(BaseCommand):
 
         return dataframe
 
-    def save_file_as_csv(self, dataframe, path, output, filename = "optimized_data.csv"):
+    def save_file_as_csv(self, dataframe, path, output, filename):
         try:
             dataframe.to_csv(f"{Path(output)}/{filename}", sep=",", index=False)
             logging.info(
@@ -105,6 +113,3 @@ class Command(BaseCommand):
             raise NotExistingDirectoryException(
                 "Cannot save file into a non-existent directory"
             )
-
-
-    
