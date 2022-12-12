@@ -18,7 +18,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 
 # Initialise environment variables
-env = environ.Env()
+env = environ.Env(
+    #Set casting, default value
+    DEBUG=(bool, False) )
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -94,7 +96,7 @@ WSGI_APPLICATION = "configuration.wsgi.application"
 
 DATABASES = {
     "default": env.db(default="psql://postgres:postgres@127.0.0.1:5432/localhost")
-    }
+}
 
 
 
