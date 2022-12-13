@@ -8,6 +8,7 @@ import numpy as np
 from spotify_data.exceptions import NoFilesException, NotExistingDirectoryException
 from spotify_data.management.commands.prepare_optimize_data import Command
 
+
 from spotify_data.constants import (DASK_COLUMNS_TO_DROP,    
                                     UNOPTIMIZABLE_COLUMNS,
                                     DASK_COLUMNS_TO_CATEGORY,
@@ -21,14 +22,14 @@ def command():
 
 
 def test_read_csv_with_proper_amount_of_columns_and_rows(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('spotify_data/tests/fixtures/unoptimized_data_sample.csv')
     dd = command.read_csv_dask_dataframe(path)
 
     assert len(dd.columns) == 9
     assert len(dd.index) == 50
 
 def test_removing_tables(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('spotify_data/tests/fixtures/unoptimized_data_sample.csv')
     dd = command.read_csv_dask_dataframe(path)
     dd = command.remove_irrelevant_columns(dd)
 
@@ -39,7 +40,7 @@ def test_removing_tables(command):
 
 
 def test_dask_data_optimization_types(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('spotify_data/tests/fixtures/unoptimized_data_sample.csv')
     dd = command.read_csv_dask_dataframe(path)
     dd = command.optimize_types_in_dask(dd)
 
@@ -52,7 +53,7 @@ def test_dask_data_optimization_types(command):
 
 
 def test_dask_to_pandas(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('spotify_data/tests/fixtures/unoptimized_data_sample.csv')
     dd = command.read_csv_dask_dataframe(path)
     df = command.dask_to_pandas(dd)
     
@@ -60,7 +61,7 @@ def test_dask_to_pandas(command):
 
 
 def test_fillna_streams(command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('spotify_data/tests/fixtures/unoptimized_data_sample.csv')
     dd = command.read_csv_dask_dataframe(path)
     df = command.dask_to_pandas(dd)
 
@@ -74,7 +75,7 @@ def test_fillna_streams(command):
 
 
 def test_pandas_data_optimization_types(command):
-    path = Path('fixtures/to_test_optimize_types_in_pandas.csv')
+    path = Path('spotify_data/tests/fixtures/to_test_optimize_types_in_pandas.csv')
     dd = command.read_csv_dask_dataframe(path)
     df = command.dask_to_pandas(dd)
     df = command.optimize_types_in_pandas(df)
@@ -84,7 +85,7 @@ def test_pandas_data_optimization_types(command):
 
 
 def test_drop_na(command):
-    path = Path('fixtures/to_test_drop_na.csv')
+    path = Path('spotify_data/tests/fixtures/to_test_drop_na.csv')
     dd = command.read_csv_dask_dataframe(path)
     df = command.dask_to_pandas(dd)
 
@@ -96,7 +97,7 @@ def test_drop_na(command):
 
 
 def test_save_good_file(tmp_path, command):
-    path = Path('fixtures/to_test_save_file.csv')
+    path = Path('spotify_data/tests/fixtures/to_test_save_file.csv')
     dd = command.read_csv_dask_dataframe(path)
     df = command.dask_to_pandas(dd)
 
@@ -110,7 +111,7 @@ def test_save_good_file(tmp_path, command):
 
 
 def test_save_file_wrong_dir(tmp_path, command):
-    path = Path('fixtures/to_test_save_file.csv')
+    path = Path('spotify_data/tests/fixtures/to_test_save_file.csv')
     dd = command.read_csv_dask_dataframe(path)
     df = command.dask_to_pandas(dd)
 
@@ -126,7 +127,7 @@ def test_save_file_wrong_dir(tmp_path, command):
 
 
 def test_handle_input_right_path(tmp_path, command):
-    path = Path('fixtures/unoptimized_data_sample.csv')
+    path = Path('spotify_data/tests/fixtures/unoptimized_data_sample.csv')
     output = tmp_path / "data_temp"
     output.mkdir()
     filename = "file_temp.csv"

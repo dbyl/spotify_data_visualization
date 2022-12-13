@@ -62,7 +62,39 @@ Create a .env file in project root directory (source). The file format can be un
 ```sh
 DEBUG=True
 SECRET_KEY=your-secret-key # generate your own secret key
-DATABASE_NAME=spotify_sqlite_database
+DATABASE_URL=psql://postgres:postgres@database:5432/postgres
 ALLOWED_HOSTS=127.0.0.1,localhost
 ```
+
+Application runs on docker so docker must be configured *(sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin)* and Docker Desktop must be installed.
+Please open Docker Desktop and run docker-compose to install dependiences and run application:
+```sh
+$ docker-compose -f docker-compose.yaml up --build
+```
+
+Docker-server should be started.
+
+To test test management commands during application running open new terminal window and run:
+```sh
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
+(env)$ python3 -m pytest source/spotify_data/tests/tests_prepare_optimize_data.py
+(env)$ python3 -m pytest source/spotify_data/tests/tests_add_data_via_raw_csv.py
+```
+
+Before next steps you to download dataset from: https://www.kaggle.com/datasets/dhruvildave/spotify-charts
+,create directory in source/spotify_data named "data" and paste there spotify_charts.csv. 
+
+To transfortm data from raw csv file run:
+```sh
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
+(env)$ python3 source/manage.py prepare_optimize_data spotify_data/data/spotify_charts.csv spotify_data/data/ spotify_charts.csv
+```
+
+To load data from optimized csv:
+```sh
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
+(env)$ python3 source/manage.py add_data_via_raw_csv spotify_data/data/spotify_charts.csv
+```
+
+
 
