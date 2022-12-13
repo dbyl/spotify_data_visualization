@@ -15,7 +15,7 @@ def command():
 @pytest.mark.django_db
 def test_load_spotify_datas_to_db_with_succeed(command, **options):
 
-    input = Path("spotify_data/tests/fixtures/unoptimized_optimized_data_sample.csv")
+    input = Path("source/spotify_data/tests/fixtures/unoptimized_optimized_data_sample.csv")
     spotify_data = command.handle(input)
     record_1 = SpotifyData.objects.get(artist="Shakira")
 

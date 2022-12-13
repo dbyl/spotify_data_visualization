@@ -1,0 +1,13 @@
+Error message: relation "spotify_data_spotifydata" does not exist
+LINE 1: INSERT INTO "spotify_data_spotifydata" ("title", "rank", "da...
+                    ^
+ 
+time: 2022-12-13 19:20:41.621265, 
+title: Goud, type: Goud 
+rank: 54, type: 54 
+date: 2017-01-02, type: 2017-01-02 
+artist: Bazart, type: Bazart 
+region: Belgium, type: Belgium 
+chart: top200, type: top200 
+streams: 6051, type: 6051 
+------------------------------

@@ -87,13 +87,13 @@ Before next steps you to download dataset from: https://www.kaggle.com/datasets/
 To transfortm data from raw csv file run:
 ```sh
 (env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
-(env)$ python3 source/manage.py prepare_optimize_data spotify_data/data/spotify_charts.csv spotify_data/data/ spotify_charts.csv
+(env)$ python3 source/manage.py prepare_optimize_data source/spotify_data/data/spotify_charts.csv source/spotify_data/data/ spotify_charts.csv
 ```
 
 To load data from optimized csv:
 ```sh
 (env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
-(env)$ python3 source/manage.py add_data_via_raw_csv spotify_data/data/spotify_charts.csv
+(env)$ python3 source/manage.py add_data_via_raw_csv source/spotify_data/data/spotify_charts.csv
 ```
 
 
