@@ -26,7 +26,7 @@ class Command(BaseCommand):
     def load_to_db(self, path):
         start_time = timezone.now()
         try:
-            with open(path, "r") as csv_file:
+            with open(path, "r", encoding='utf-8') as csv_file:
                 data = csv.reader(csv_file)
                 packet_spotify_data = []
                 bad = -1  # first row is a header

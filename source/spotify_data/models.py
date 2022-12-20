@@ -3,10 +3,10 @@ from django.db import models
 
 class SpotifyData(models.Model):
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=60)
     rank = models.IntegerField()
     date = models.DateField()
-    artist = models.CharField(max_length=200)
-    region = models.CharField(max_length=50)
-    chart = models.CharField(max_length=15)
+    artist = models.CharField(max_length=60)
+    region = models.CharField(max_length=22)
+    chart = models.CharField(max_length=10)
     streams = models.IntegerField()
