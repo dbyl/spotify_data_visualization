@@ -7,6 +7,6 @@ class SpotifyData(models.Model):
     rank = models.IntegerField()
     date = models.DateField()
     artist = models.CharField(max_length=60)
-    region = models.CharField(max_length=22)
-    chart = models.CharField(max_length=10)
+    region = models.CharField(max_length=20)
+    chart = models.CharField(max_length=8)
     streams = models.IntegerField()

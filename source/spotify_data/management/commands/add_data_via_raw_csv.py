@@ -1,7 +1,7 @@
-import logging
-import logging.config
 import csv
 import datetime
+import logging
+import logging.config
 
 from django.core.management import BaseCommand
 from django.utils import timezone
@@ -16,17 +16,17 @@ class Command(BaseCommand):
     help = "A command to add data from a csv file to the database."
 
     def add_arguments(self, parser):
-        parser.add_argument("input", type=str, help='Choose path with input csv files')
+        parser.add_argument("input", type=str, help="Choose path with input csv files")
 
     def handle(self, input, *args, **options):
 
         logging.info(f"Preparing data from {input}...")
         self.load_to_db(input)
-    
+
     def load_to_db(self, path):
         start_time = timezone.now()
         try:
-            with open(path, "r", encoding='utf-8') as csv_file:
+            with open(path, "r") as csv_file:
                 data = csv.reader(csv_file)
                 packet_spotify_data = []
                 bad = -1  # first row is a header
