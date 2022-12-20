@@ -44,3 +44,12 @@ UNOPTIMIZABLE_COLUMNS = [
     "streams" 
 ]
     
+PANDAS_COLUMNS_TO_TRIM_DATA = [
+    "title",
+    "artist"
+]
+
+PANDAS_COLUMNS_TO_CATEGORY = [
+    "title",
+    "artist"
+]

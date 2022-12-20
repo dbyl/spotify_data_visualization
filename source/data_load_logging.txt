@@ -1,0 +1,10 @@
+Error message: invalid literal for int() with base 10: 'rank' 
+time: 2022-12-13 18:07:34.153357, 
+title: title, type: title 
+rank: rank, type: rank 
+date: date, type: date 
+artist: artist, type: artist 
+region: region, type: region 
+chart: chart, type: chart 
+streams: streams, type: streams 
+------------------------------

@@ -1,7 +1,7 @@
-import logging
-import logging.config
 import csv
 import datetime
+import logging
+import logging.config
 
 import pandas as pd
 from django.core.management import BaseCommand
