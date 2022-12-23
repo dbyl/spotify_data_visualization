@@ -74,6 +74,7 @@ $ docker-compose -f docker-compose.yaml up --build
 
 Docker-server should be started.
 
+
 To test test management commands during application running open new terminal window and run:
 ```sh
 (env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
@@ -83,6 +84,18 @@ To test test management commands during application running open new terminal wi
 
 Before next steps you to download dataset from: https://www.kaggle.com/datasets/dhruvildave/spotify-charts
 ,create directory in source/spotify_data named "data" and paste there spotify_charts.csv. 
+
+
+If project is setting up for the first time make sure that in source/spotify_data/makemigrations exists only one file - __init__.py. 
+To make migrations and create superuser run:
+```sh
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash  
+(env)$ python3 source/manage.py migrate
+(env)$ python3 source/manage.py makemigrations
+(env)$ python3 source/manage.py sqlmigrate spotify_data 0001
+(env)$ python3 source/manage.py createsuperuser
+(env)$ python3 source/manage.py migrate
+```
 
 To transfortm data from raw csv file run:
 ```sh
