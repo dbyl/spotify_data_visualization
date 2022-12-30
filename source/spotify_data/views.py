@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from spotify_data.models import SpotifyData
 from spotify_data.forms import DateForm
+from spotify_data.forms import CharFieldForm
+
+
 from typing import Any, Dict
 
 from django.urls import reverse_lazy
@@ -37,8 +40,9 @@ class Dashboard(TemplateView):
 
         start_date = self.request.GET.get("start")
         end_date = self.request.GET.get("end")
-        choosen_artist = "Billie Eilish"
-        choosen_title = "bad guy"
+        choosen_artist = self.request.GET.get("artist")
+        choosen_title = self.request.GET.get("title")
+
         choosen_region = "United States"
         choosen_chart = "top200"
 
@@ -68,4 +72,5 @@ class Dashboard(TemplateView):
         context["chart"] = chart
         context["filtered"] = data
         context["form"] = DateForm()
+        context["form_char"] = CharFieldForm()
         return context
