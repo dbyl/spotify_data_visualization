@@ -4,7 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from spotify_data.models import SpotifyData
 from spotify_data.forms import DateForm
-from spotify_data.forms import CharFieldForm
+from spotify_data.forms import ArtistTitle
+from spotify_data.forms import ChartRegion
+
 
 
 from typing import Any, Dict
@@ -38,13 +40,12 @@ class Dashboard(TemplateView):
         
         context = super().get_context_data(**kwargs)
 
-        start_date = self.request.GET.get("start")
-        end_date = self.request.GET.get("end")
-        choosen_artist = self.request.GET.get("artist")
-        choosen_title = self.request.GET.get("title")
-
+        start_date = self.request.GET.get("FROM")
+        end_date = self.request.GET.get("TO")
+        choosen_artist = self.request.GET.get("ARTIST")
+        choosen_title = self.request.GET.get("TITLE")
         choosen_region = "United States"
-        choosen_chart = "top200"
+        choosen_chart = self.request.GET.get("CHART")
 
         context_filtered = SpotifyData.objects.filter(date__range=(start_date, end_date), artist = choosen_artist, 
                             title=choosen_title, region=choosen_region, chart=choosen_chart).values()
@@ -72,5 +73,6 @@ class Dashboard(TemplateView):
         context["chart"] = chart
         context["filtered"] = data
         context["form"] = DateForm()
-        context["form_char"] = CharFieldForm()
+        context["form_char"] = ArtistTitle()
+        context["form_choice"] = ChartRegion()
         return context

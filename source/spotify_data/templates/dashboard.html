@@ -1,46 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-.button {
-  border: none;
-  color: rgb(255, 255, 255);
-  padding: 7px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 2px 2px;
-  cursor: pointer;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-}
-
-.button1 {background-color: #1DB954;} /* Green */
-.button2 {background-color: #008CBA;} /* Blue */
-
-.font {
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-  font-size: 14px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-}
-</style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
 </head>
-
-
-<body style="background:#111111">
-    <main class="px-3 text-center">
-        <div>
-          <form method="GET" action="{% url 'dashboard' %}", class="font">
-            {{ form.as_p }}
+    <body>
+      <div class = "center">
+        <form class="font" method="GET" action="{% url 'dashboard' %}" >
+          <p>
+            {{ form.as_table }} 
             {{ form_char.as_p }}
-            <button class="button button1">Submit</button>
-          </form>
-        </div>
-        <div class="container px-4 py-5 text-center" id="featured-3">
-          <div class="feature col" style="height:600px; width:900px;">
-            <p>{{ chart|safe }}</p>
+            {{ form_choice.as_p }}
+          </p>
+          <div>
+            <button class="button b_green"><i class="fa-solid fa-magnifying-glass fa-xs"></i>&nbsp; Submit</button>
           </div>
-        </div>
-     </main>
-  </body>
+        </form>
+      </div>
+      <div class="box">
+        {{ chart|safe }}
+      </div>
+      
+    </body>
+</html>
