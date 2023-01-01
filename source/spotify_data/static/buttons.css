@@ -1,0 +1,33 @@
+.button {
+    color: #191414;
+    padding: 4px 13px;
+    font-weight: 750;
+    text-align:left ;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 15px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-overflow: ellipsis;
+    border-radius: 8px;
+    border: 2px solid #1DB954;
+    cursor: pointer;
+    margin: 10px auto;
+    font-family: 'Nunito', sans-serif;
+    transition-duration: 0.4s;
+    background-color: #1DB954;
+
+}
+
+.button:hover {
+    background-color: #191414;;
+    color: #1DB954;
+}
+
+.button:active {
+    background-color: #191414;
+    box-shadow: 0 2px #0b4921;
+    transform: translateY(2px);
+}

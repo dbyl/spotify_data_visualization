@@ -1,30 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
-</head>
+{% extends 'base.html' %}
+{% block content %}
     <body>
-      <div class = "center">
-        <form class="font" method="GET" action="{% url 'dashboard' %}" >
+      <div class ="form_box">
+        <form method="GET" action="{% url 'dashboard' %}" >
           <p>
-            {{ form.as_table }} 
-            {{ form_char.as_p }}
-            {{ form_choice.as_p }}
+            {{ daterange_form.as_table }} 
+            {{ artist1_form.as_p }}
+            {{ title1_form.as_p }}
+            {{ chart_form.as_p }}
+            {{ region_form.as_p}}
           </p>
           <div>
             <button class="button b_green"><i class="fa-solid fa-magnifying-glass fa-xs"></i>&nbsp; Submit</button>
           </div>
         </form>
       </div>
-      <div class="box">
+      <div class="chart_box">
         {{ chart|safe }}
       </div>
-      
     </body>
-</html>
+{% endblock %}

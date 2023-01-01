@@ -1,0 +1,18 @@
+.chart_box {
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1DB954;
+    width: 1200px;
+    margin: 0px auto
+}
+
+.form_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-family: 'Nunito', sans-serif;
+}
+

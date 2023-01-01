@@ -1,23 +1,17 @@
 import plotly.express as px
 import plotly.graph_objects as go
-from django.http import HttpResponse
 from django.shortcuts import render
 from spotify_data.models import SpotifyData
-from spotify_data.forms import DateForm
-from spotify_data.forms import ArtistTitle
-from spotify_data.forms import ChartRegion
-
-
+from spotify_data.forms import (DateRangeForm,
+                                Artist1Form,
+                                Title1Form,
+                                ChartForm,
+                                RegionForm
+)
 
 from typing import Any, Dict
-
-from django.urls import reverse_lazy
-from django.views import generic
 from django.views.generic import TemplateView
-from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-
-
 
 class HomeView(ListView):
 
@@ -40,26 +34,26 @@ class Dashboard(TemplateView):
         
         context = super().get_context_data(**kwargs)
 
-        start_date = self.request.GET.get("FROM")
-        end_date = self.request.GET.get("TO")
-        choosen_artist = self.request.GET.get("ARTIST")
-        choosen_title = self.request.GET.get("TITLE")
-        choosen_region = "United States"
-        choosen_chart = self.request.GET.get("CHART")
+        start = self.request.GET.get("FROM")
+        end = self.request.GET.get("TO")
+        artist = self.request.GET.get("ARTIST")
+        title = self.request.GET.get("TITLE")
+        region = self.request.GET.get("REGION")
+        chart = self.request.GET.get("CHART")
 
-        context_filtered = SpotifyData.objects.filter(date__range=(start_date, end_date), artist = choosen_artist, 
-                            title=choosen_title, region=choosen_region, chart=choosen_chart).values()
+        data_filtered = SpotifyData.objects.filter(date__range=(start, end), artist = artist, 
+                            title=title, region=region, chart=chart).values()
        
-        data = context_filtered.values_list("date", "rank")
+        data = data_filtered.values_list("date", "rank")
        
         data_x = [c[0] for c in data.order_by("date")]
         data_y = [c[1] for c in data.order_by("date")]
 
         fig = px.line(template="plotly_dark")
         fig.add_trace(go.Scatter(x=data_x, y=data_y, 
-                           name=f"{choosen_artist} - {choosen_title}", 
+                           name=f"{artist} - {title}", 
                            line=dict(color="#1DB954"), showlegend=True))
-        fig.update_layout(title=f"{choosen_artist} - {choosen_title} rank changes from {start_date} to {end_date}", 
+        fig.update_layout(title=f"{artist} - {title} rank changes from {start} to {end}", 
         title_x=0.5,
         legend=dict(
         orientation="h",
@@ -70,9 +64,13 @@ class Dashboard(TemplateView):
         ))
 
         chart = fig.to_html()
-        context["chart"] = chart
-        context["filtered"] = data
-        context["form"] = DateForm()
-        context["form_char"] = ArtistTitle()
-        context["form_choice"] = ChartRegion()
+
+        context = {"chart": chart,
+                "daterange_form": DateRangeForm(),
+                "artist1_form": Artist1Form(),
+                "title1_form": Title1Form(),
+                "chart_form": ChartForm(),
+                "region_form": RegionForm(),
+        }
+
         return context
