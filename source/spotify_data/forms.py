@@ -22,13 +22,13 @@ class ChartForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(ChartForm, self).__init__(*args, **kwargs)
-        self.fields['CHART'].choices = SpotifyData.objects.all().\
-            only("chart").values_list("chart","chart").distinct().order_by("chart")
+        self.fields['CHART'].choices = SpotifyData.objects.values("chart").\
+            values_list("chart","chart").distinct().order_by("chart")
 
 class RegionForm(forms.Form):
     REGION = forms.ChoiceField(required=True, choices=[], widget=forms.Select, initial="United States")
 
     def __init__(self, *args, **kwargs):
         super(RegionForm, self).__init__(*args, **kwargs)
-        self.fields['REGION'].choices = SpotifyData.objects.all().\
-            only("region").values_list("region","region").distinct().order_by("region")
+        self.fields['REGION'].choices = SpotifyData.objects.values("region")\
+            .values_list("region","region").distinct().order_by("region")

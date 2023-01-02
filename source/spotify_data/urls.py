@@ -5,10 +5,11 @@ from django.conf.urls.static import static
 
 from spotify_data.views import (
     HomeView,
-    Dashboard,
+    SongRankChangesChart,
 )
 
 urlpatterns = [
     path("", HomeView.as_view(template_name="index.html"), name="home"),
-    path("dashboard/", Dashboard.as_view(template_name="dashboard.html"), name="dashboard")
+    path("songrankchart/", SongRankChangesChart.as_view(template_name="song_rank_changes_chart.html"), \
+    name="song_rank_changes_chart")
 ]

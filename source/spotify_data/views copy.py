@@ -8,8 +8,6 @@ from spotify_data.forms import (DateRangeForm,
                                 ChartForm,
                                 RegionForm
 )
-from spotify_data.charts import (make_song_rank_changes_chart,
-)
 
 from typing import Any, Dict
 from django.views.generic import TemplateView
@@ -26,30 +24,45 @@ class HomeView(ListView):
 
         return context
 
-class SongRankChangesChart(TemplateView):
+class Dashboard(TemplateView):
 
     model = SpotifyData
     context_object_name = "rank_changes"
     
-    
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         
         context = super().get_context_data(**kwargs)
 
-        ch_region = SpotifyData.objects.values("region").order_by("region").distinct()
-        ch_chart = SpotifyData.objects.values("chart").order_by("chart").distinct()
-        ch_artist = SpotifyData.objects.values("artist").order_by("artist").distinct()
 
         start = self.request.GET.get("FROM")
         end = self.request.GET.get("TO")
+        artist = self.request.GET.get("ARTIST")
         title = self.request.GET.get("TITLE")
+        region = self.request.GET.get("REGION")
+        chart = self.request.GET.get("CHART")
 
-        data_filtered = SpotifyData.objects.filter(date__range=(start, end), artist = ch_artist[0], 
-                            title=title, region=ch_region[0], chart=ch_chart[0]).values()
+        data_filtered = SpotifyData.objects.filter(date__range=(start, end), artist = artist, 
+                            title=title, region=region, chart=chart).values()
        
         data = data_filtered.values_list("date", "rank")
        
-        fig = make_song_rank_changes_chart(data, start, end, ch_artist, title)
+        data_x = [c[0] for c in data.order_by("date")]
+        data_y = [c[1] for c in data.order_by("date")]
+
+        fig = px.line(template="plotly_dark")
+        fig.add_trace(go.Scatter(x=data_x, y=data_y, 
+                           name=f"{artist} - {title}", 
+                           line=dict(color="#1DB954"), showlegend=True))
+        fig.update_layout(title=f"{artist} - {title} rank changes from {start} to {end}", 
+        title_x=0.5,
+        legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=0.5,
+        xanchor="right",
+        x=1
+        ))
 
         chart = fig.to_html()
 
@@ -57,9 +70,10 @@ class SongRankChangesChart(TemplateView):
                 "daterange_form": DateRangeForm(),
                 "artist1_form": Artist1Form(),
                 "title1_form": Title1Form(),
-                "ch_region": ch_region,
-                "ch_chart": ch_chart,
-                "ch_artist": ch_artist,
+                "chart_form": ChartForm(),
+                "region_form": RegionForm(),
+                "reg": reg,
+    
         }
 
         return context
