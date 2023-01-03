@@ -32,3 +32,11 @@ class RegionForm(forms.Form):
         super(RegionForm, self).__init__(*args, **kwargs)
         self.fields['REGION'].choices = SpotifyData.objects.values("region")\
             .values_list("region","region").distinct().order_by("region")
+
+class ArtistForm(forms.Form):
+    ARTIST = forms.ChoiceField(required=True, choices=[], widget=forms.Select,)
+
+    def __init__(self, *args, **kwargs):
+        super(ArtistForm, self).__init__(*args, **kwargs)
+        self.fields['ARTIST'].choices = SpotifyData.objects.values("artist").\
+            values_list("artist","artist").distinct().order_by("artist")

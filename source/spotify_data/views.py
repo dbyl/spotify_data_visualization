@@ -2,12 +2,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from django.shortcuts import render
 from spotify_data.models import SpotifyData
-from spotify_data.forms import (DateRangeForm,
-                                Artist1Form,
-                                Title1Form,
-                                ChartForm,
-                                RegionForm
-)
 from spotify_data.charts import (make_song_rank_changes_chart,
 )
 
@@ -36,30 +30,28 @@ class SongRankChangesChart(TemplateView):
         
         context = super().get_context_data(**kwargs)
 
+        ch_start = SpotifyData.objects.values("date")
+        end = '2020-01-01'
         ch_region = SpotifyData.objects.values("region").order_by("region").distinct()
         ch_chart = SpotifyData.objects.values("chart").order_by("chart").distinct()
         ch_artist = SpotifyData.objects.values("artist").order_by("artist").distinct()
+        ch_title = SpotifyData.objects.values("title").order_by("title").distinct()
 
-        start = self.request.GET.get("FROM")
-        end = self.request.GET.get("TO")
-        title = self.request.GET.get("TITLE")
-
-        data_filtered = SpotifyData.objects.filter(date__range=(start, end), artist = ch_artist[0], 
-                            title=title, region=ch_region[0], chart=ch_chart[0]).values()
+        data_filtered = SpotifyData.objects.filter(date__range=(ch_start, end), artist = ch_artist[0], 
+                            title=ch_title[0], region=ch_region[0], chart=ch_chart[0]).values()
        
         data = data_filtered.values_list("date", "rank")
        
-        fig = make_song_rank_changes_chart(data, start, end, ch_artist, title)
+        fig = make_song_rank_changes_chart(data, ch_start, end, ch_artist, ch_title)
 
         chart = fig.to_html()
 
         context = {"chart": chart,
-                "daterange_form": DateRangeForm(),
-                "artist1_form": Artist1Form(),
-                "title1_form": Title1Form(),
+                "ch_title": ch_title,
                 "ch_region": ch_region,
                 "ch_chart": ch_chart,
                 "ch_artist": ch_artist,
+                "ch_start": ch_start,
         }
 
         return context
