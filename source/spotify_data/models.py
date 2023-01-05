@@ -19,3 +19,6 @@ class SpotifyData(models.Model):
             models.Index(fields=['region']),
             models.Index(fields=['chart']),
             ]
+
+
+
