@@ -154,6 +154,7 @@ cython_debug/
 
 # Datasets
 spotify_charts.csv
+spotify_charts_all.csv
 optimized_data.csv
 spotify_sqlite_database
 

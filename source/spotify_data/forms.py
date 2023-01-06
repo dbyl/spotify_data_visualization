@@ -1,5 +1,12 @@
 from django import forms
-from spotify_data.models import SpotifyData
+from .models import *
+from spotify_data.models import (Region,
+                                 Rank,
+                                 Chart,
+                                 Artist,
+                                 Title,
+                                 ArtistTitle,
+                                 SpotifyData)
 
 class DateRangeForm(forms.Form):
     FROM = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}), initial="2019-01-01")
@@ -33,10 +40,3 @@ class RegionForm(forms.Form):
         self.fields['REGION'].choices = SpotifyData.objects.values("region")\
             .values_list("region","region").distinct().order_by("region")
 
-class ArtistForm(forms.Form):
-    ARTIST = forms.ChoiceField(required=True, choices=[], widget=forms.Select,)
-
-    def __init__(self, *args, **kwargs):
-        super(ArtistForm, self).__init__(*args, **kwargs)
-        self.fields['ARTIST'].choices = SpotifyData.objects.values("artist").\
-            values_list("artist","artist").distinct().order_by("artist")

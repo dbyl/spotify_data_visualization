@@ -1,10 +1,1 @@
-Error message: invalid literal for int() with base 10: 'rank' 
-time: 2023-01-03 13:41:35.649139, 
-title: title, type: title 
-rank: rank, type: rank 
-date: date, type: date 
-artist: artist, type: artist 
-region: region, type: region 
-chart: chart, type: chart 
-streams: streams, type: streams 
-------------------------------
+Error message: invalid literal for int() with base 10: "That's How You Know (feat. Kid Ink & Bebe Rexha)" 

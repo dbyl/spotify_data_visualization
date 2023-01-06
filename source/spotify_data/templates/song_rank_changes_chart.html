@@ -5,64 +5,26 @@
         <form method="GET" name="chart_1" action="{% url 'song_rank_changes_chart' %}" >
           {% csrf_token %}
 
-          <div>
-            Region
-            <input list="list_of_regions" id="1" placeholder="Choose region"
-                aria-label="Search" name="region">
-            <datalist id="list_of_regions">
-                {% for name in ch_region %}
-                <option value="{{name.region}}">
-                  {% endfor %}
-            </datalist>
-          </div>
-          
-          <div>
-            Chart
-            <input list="list_of_charts" id="2" placeholder="Choose chart" aria-label="Search"
-                 name="chart">
-            <datalist id="list_of_charts">
-                {% for name in ch_chart %}
-                <option value="{{name.chart}}">
-                  {% endfor %}
-            </datalist>
-          </div>
-
-          <div>
-            Artist
-            <input list="list_of_artists" id="3" placeholder="Choose artist" aria-label="Search"
-                 name="artist">
-            <datalist id="list_of_artists">
-                {% for name in ch_artist %}
-                <option value="{{name.artist}}">
-                  {% endfor %}
-            </datalist>
-          </div>
-
-          <div>
-            Title
-            <input list="list_of_titles" id="4" placeholder="Choose title" aria-label="Search"
-                 name="title">
-            <datalist id="list_of_titles">
-                {% for name in ch_title %}
-                <option value="{{name.title}}">
-                  {% endfor %}
-            </datalist>
-          </div>
-
-          <div>
-            Start date
-            <input type="date" id="5" name="start_date", value="2019-01-01"
-            min="2017-01-01" max="2021-12-31">">
-          </div>
+          {{ daterange_form.as_table }} 
+          {{ artist1_form.as_p }}
+          {{ title1_form.as_p }}
+          {{ chart_form.as_p }}
+          {{ region_form.as_p}}
 
 
           <div>
-          <button type="submit">Submit</button>
+            <button class="button b_green"><i class="fa-solid fa-magnifying-glass fa-xs"></i>&nbsp; Submit</button>
           </div>
         </form>
       </div>
+      
       <div class="chart_box">
         {{ chart|safe }}
+      </div>
+
+      <div>
+        {{ch_artist}}
+
       </div>
     </body>
 {% endblock %}

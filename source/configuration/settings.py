@@ -51,7 +51,6 @@ LOGGING = {
 # Application definition
 
 INSTALLED_APPS = [
-    "spotify_data.apps.SpotifyDataConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -59,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "fontawesomefree",
+    "spotify_data",
 ]
 
 MIDDLEWARE = [

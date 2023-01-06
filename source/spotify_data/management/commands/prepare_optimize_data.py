@@ -123,7 +123,7 @@ class Command(BaseCommand):
 
     def save_file_as_csv(self, dataframe, path, output, filename):
         try:
-            dataframe.to_csv(f"{Path(output)}/{filename}", sep=",", index=False)
+            dataframe[0:300000].to_csv(f"{Path(output)}/{filename}", sep=",", index=False)
             logging.info(
                 f"Prepared new csv file: {path} - {filename} for {len(dataframe)} spotify_data \n"
             )
