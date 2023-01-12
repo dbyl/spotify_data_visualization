@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 from spotify_data.exceptions import NoFilesException
-from spotify_data.management.commands.add_data_via_raw_csv import Command
+from spotify_data.management.commands.add_data_with_django_orm import Command
 from spotify_data.models import SpotifyData
 
 

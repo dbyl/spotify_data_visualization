@@ -27,10 +27,10 @@ class ArtistTitle(models.Model):
 
 class SpotifyData(models.Model):
 
-    title = models.ForeignKey(ArtistTitle, related_name='re_title', on_delete=models.PROTECT)
+    title = models.ForeignKey(Title, on_delete=models.PROTECT)
     rank = models.ForeignKey(Rank, on_delete=models.PROTECT)
     date = models.DateField()
-    artist = models.ForeignKey(ArtistTitle, related_name='re_artist', on_delete=models.PROTECT)
+    artist = models.ForeignKey(Artist, on_delete=models.PROTECT)
     region = models.ForeignKey(Region, on_delete=models.PROTECT)
     chart = models.ForeignKey(Chart, on_delete=models.PROTECT)
     streams = models.IntegerField()

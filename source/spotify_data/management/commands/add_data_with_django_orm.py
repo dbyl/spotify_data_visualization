@@ -6,7 +6,13 @@ import logging.config
 import pandas as pd
 from django.core.management import BaseCommand
 from django.utils import timezone
-from spotify_data.models import SpotifyData
+from spotify_data.models import (SpotifyData,
+                     Region,
+                     Rank,
+                     Chart,
+                     Artist,
+                     Title,
+                     ArtistTitle)
 
 
 class Command(BaseCommand):
@@ -31,18 +37,41 @@ class Command(BaseCommand):
 
     def load_to_db(self, df):
         bad = 0
+        good = 0
+        start = datetime.datetime.now
         for _, row in df.iterrows():
             try:
-                obj, _ = SpotifyData.objects.get_or_create(
-                    title=row["title"],
-                    rank=int(row["rank"]),
-                    date=row["date"],
-                    artist=row["artist"],
+                region_obj, _ = Region.objects.get_or_create(
                     region=row["region"],
-                    chart=row["chart"],
-                    streams=int(row["streams"]),
                 )
-                print("good", datetime.datetime.now)
+                rank_obj, _ = Rank.objects.get_or_create(
+                    rank=row["rank"],
+                )
+                chart_obj, _ = Chart.objects.get_or_create(
+                    chart=row["chart"],
+                )
+                artist_obj, _ = Artist.objects.get_or_create(
+                    artist=row["artist"],
+                )
+                title_obj, _ = Title.objects.get_or_create(
+                    title=row["title"],
+                )
+                arttit_obj, _ = ArtistTitle.objects.update_or_create(
+                    artist=artist_obj,
+                    title=title_obj,
+                )
+                spotifydata_obj, _ = SpotifyData.objects.update_or_create(
+                    title=arttit_obj,
+                    rank=rank_obj,
+                    date=row["date"],
+                    artist=arttit_obj,
+                    region=region_obj,
+                    chart=chart_obj,
+                    streams=row["streams"],
+                )
+                good += 1
+                now = datetime.datetime.now
+                print(f"goods: {good}, loading time: {start-now}", )
             except Exception as e:
                 bad += 1
                 current_time = datetime.datetime.now()
@@ -60,4 +89,3 @@ class Command(BaseCommand):
                         + "-" * 30
                         + "\n"
                     )
-        print(bad)
