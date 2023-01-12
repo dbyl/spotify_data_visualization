@@ -4,7 +4,6 @@
 
 The program will be used to visualize data about top200 and viral50 charts published globally by Spotify.
 
-Players data are collected from FIFA databases prepared 
 Dataset is made by a member of the kaggle.com community: https://www.kaggle.com/datasets/dhruvildave/spotify-charts
 Databases are separated by days for each, from 01.01.2017 to 31.12.2021. 
 
@@ -75,14 +74,14 @@ Please open Docker Desktop and run docker-compose to install dependiences and ru
 Docker-server should be started.
 
 
-To test test management commands during application running open new terminal window and run:
+To test management commands during application running open new terminal window and run:
 ```sh
 (env)$ docker exec -it spotify_data_visualization-web-1 /bin/bash
 (env)$ python3 -m pytest source/spotify_data/tests/tests_prepare_optimize_data.py
 (env)$ python3 -m pytest source/spotify_data/tests/tests_add_data_via_raw_csv.py
 ```
 
-Before next steps you to download dataset from: https://www.kaggle.com/datasets/dhruvildave/spotify-charts
+Before next steps you have to download dataset from: https://www.kaggle.com/datasets/dhruvildave/spotify-charts
 ,create directory in source/spotify_data named "data" and paste there spotify_charts.csv. 
 
 
