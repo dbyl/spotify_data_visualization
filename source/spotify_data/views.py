@@ -44,6 +44,7 @@ class SongRankChangesChart(TemplateView):
         
         context = super().get_context_data(**kwargs)
 
+
         start = self.request.GET.get("FROM")
         end = self.request.GET.get("TO")
         artist = self.request.GET.get("ARTIST")

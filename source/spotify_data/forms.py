@@ -13,7 +13,13 @@ class DateRangeForm(forms.Form):
     TO = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}), initial="2020-01-01")
     
 class Artist1Form(forms.Form):
-    ARTIST = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield'}), initial="Billie Eilish")
+    ARTIST = forms.ChoiceField(required=True, choices=[], widget=forms.Select,)
+
+    def __init__(self, *args, **kwargs):
+        super(Artist1Form, self).__init__(*args, **kwargs)
+        self.fields['ARTIST'].choices = Artist.objects.values("artist").\
+            values_list("artist","artist")
+
 
 class Title1Form(forms.Form):
     TITLE = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield'}), initial="bad guy")
@@ -29,14 +35,14 @@ class ChartForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(ChartForm, self).__init__(*args, **kwargs)
-        self.fields['CHART'].choices = SpotifyData.objects.values("chart").\
-            values_list("chart","chart").distinct().order_by("chart")
+        self.fields['CHART'].choices = Chart.objects.values("chart").\
+            values_list("chart","chart")
 
 class RegionForm(forms.Form):
     REGION = forms.ChoiceField(required=True, choices=[], widget=forms.Select, initial="United States")
 
     def __init__(self, *args, **kwargs):
         super(RegionForm, self).__init__(*args, **kwargs)
-        self.fields['REGION'].choices = SpotifyData.objects.values("region")\
-            .values_list("region","region").distinct().order_by("region")
+        self.fields['REGION'].choices = Region.objects.values("region")\
+            .values_list("region","region")
 
