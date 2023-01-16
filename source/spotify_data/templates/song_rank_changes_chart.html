@@ -6,10 +6,16 @@
           {% csrf_token %}
 
           {{ daterange_form.as_table }} 
-          {{ artist1_form.as_p }}
+
           {{ title1_form.as_p }}
           {{ chart_form.as_p }}
           {{ region_form.as_p}}
+
+          {{ artist1_form }}
+
+          {{ df }}
+
+
 
 
           <div>

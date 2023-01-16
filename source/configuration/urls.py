@@ -23,5 +23,4 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("spotify_data.urls")),
-
 ]

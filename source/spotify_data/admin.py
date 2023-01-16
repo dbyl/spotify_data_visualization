@@ -5,8 +5,7 @@ from .models import (SpotifyData,
                      Rank,
                      Chart,
                      Artist,
-                     Title,
-                     ArtistTitle)
+                     Title)
 
 
 admin.site.register(Region)
@@ -14,7 +13,6 @@ admin.site.register(Rank)
 admin.site.register(Chart)
 admin.site.register(Artist)
 admin.site.register(Title)
-admin.site.register(ArtistTitle)
 admin.site.register(SpotifyData)
 
 

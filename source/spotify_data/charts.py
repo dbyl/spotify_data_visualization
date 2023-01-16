@@ -3,8 +3,8 @@ import plotly.graph_objects as go
 
 def make_song_rank_changes_chart(data, start, end, artist, title):
 
-    data_x = [c[0] for c in data.order_by("date")]
-    data_y = [c[0] for c in data.order_by("date")]
+    data_x = [c[1] for c in data.order_by("date")]
+    data_y = [c[1] for c in data.order_by("date")]
 
     fig = px.line(template="plotly_dark")
     fig.add_trace(go.Scatter(x=data_x, y=data_y, 

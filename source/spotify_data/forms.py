@@ -5,7 +5,6 @@ from spotify_data.models import (Region,
                                  Chart,
                                  Artist,
                                  Title,
-                                 ArtistTitle,
                                  SpotifyData)
 
 class DateRangeForm(forms.Form):
@@ -13,13 +12,13 @@ class DateRangeForm(forms.Form):
     TO = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}), initial="2020-01-01")
     
 class Artist1Form(forms.Form):
+
     ARTIST = forms.ChoiceField(required=True, choices=[], widget=forms.Select,)
 
     def __init__(self, *args, **kwargs):
         super(Artist1Form, self).__init__(*args, **kwargs)
-        self.fields['ARTIST'].choices = Artist.objects.values("artist").\
-            values_list("artist","artist")
-
+        self.fields['ARTIST'].choices = Artist.objects.values("name").\
+            values_list("name","name")
 
 class Title1Form(forms.Form):
     TITLE = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield'}), initial="bad guy")
@@ -35,14 +34,33 @@ class ChartForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(ChartForm, self).__init__(*args, **kwargs)
-        self.fields['CHART'].choices = Chart.objects.values("chart").\
-            values_list("chart","chart")
+        self.fields['CHART'].choices = Chart.objects.values("name").\
+            values_list("name","name")
 
 class RegionForm(forms.Form):
-    REGION = forms.ChoiceField(required=True, choices=[], widget=forms.Select, initial="United States")
+    REGION = forms.ChoiceField(required=True, choices=[], widget=forms.Select,)
 
     def __init__(self, *args, **kwargs):
         super(RegionForm, self).__init__(*args, **kwargs)
-        self.fields['REGION'].choices = Region.objects.values("region")\
-            .values_list("region","region")
+        self.fields['REGION'].choices = Region.objects.values("name").\
+            values_list("name","name")
+
+class ArtistTitleForm(forms.ModelForm):
+    class Meta:
+        model = SpotifyData
+        fields = ['artist','title']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].queryset = Title.objects.none()
+
+        if 'artist' in self.data:
+            try:
+                artist_id = int(self.data.get('artist'))
+                self.fields['title'].queryset = Title.objects.filter(artist_id=artist_id).order_by('title')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['title'].queryset = self.instance.artist.title_set.order_by('title')
+
 

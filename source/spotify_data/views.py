@@ -1,13 +1,14 @@
 import plotly.express as px
 import plotly.graph_objects as go
-from django.shortcuts import render
+from django.http import Http404, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from spotify_data.models import (Region,
                                  Rank,
                                  Chart,
                                  Artist,
                                  Title,
-                                 ArtistTitle,
-                                 SpotifyData)
+                                 SpotifyData,
+                                 )
                                 
 from spotify_data.charts import (make_song_rank_changes_chart,
 )
@@ -17,6 +18,8 @@ from spotify_data.forms import (DateRangeForm,
                                 ChartForm,
                                 RegionForm,
                                 Artist1Form,
+                                ArtistTitleForm,
+
 )
 
 from typing import Any, Dict
@@ -44,16 +47,20 @@ class SongRankChangesChart(TemplateView):
         
         context = super().get_context_data(**kwargs)
 
-
+        
         start = self.request.GET.get("FROM")
         end = self.request.GET.get("TO")
-        artist = self.request.GET.get("ARTIST")
+        artist = self.request.GET.get("ARTISTG")
         title = self.request.GET.get("TITLE")
         region = self.request.GET.get("REGION")
         chart = self.request.GET.get("CHART")
+        
 
-        data_filtered = SpotifyData.objects.filter(date__range=(start, end), artist = artist, 
-                            title=title, region=region, chart=chart).values()
+
+        chart_id = Chart.objects.filter(name=chart["name"]).values("id")
+
+        data_filtered = SpotifyData.objects.filter(date__range=(start, end), artist = artist, title = title
+                            , region=region, chart=chart_id).values()
        
         data = data_filtered.values_list("date", "rank")
        
@@ -68,6 +75,36 @@ class SongRankChangesChart(TemplateView):
                 "title1_form": Title1Form(),
                 "chart_form": ChartForm(),
                 "region_form": RegionForm(),
+                "region_form":RegionForm(),  
+                "df":data_filtered             
         }
 
         return context
+
+def spotifydata_create_view(request):
+    form = ArtistTitleForm()
+    if request.method == 'GET':
+        form = ArtistTitleForm(request.GET)
+        if form.is_valid():
+            form.save()
+            return redirect('spotifydata')
+    return render(request, 'spotifydatas/home1.html', {'form': form})
+
+
+def spotifydata_update_view(request, pk):
+    spotifydata = get_object_or_404(SpotifyData, pk=pk)
+    form = ArtistTitleForm(instance=spotifydata)
+    if request.method == 'GET':
+        form = ArtistTitleForm(request.GET, instance=spotifydata)
+        if form.is_valid():
+            form.save()
+            return redirect('spotifydata_change', pk=pk)
+    return render(request, 'spotifydatas/home1.html', {'form': form})
+
+def load_titles(request):
+    artist_id = request.GET.get('artist_id')
+    titles = Title.objects.filter(artist_id=artist_id).all()
+    return render(request, 'spotifydatas/title_dropdown_list_options.html', {'titles': titles})
+
+
+

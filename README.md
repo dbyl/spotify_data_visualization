@@ -76,7 +76,7 @@ Docker-server should be started.
 
 To test management commands during application running open new terminal window and run:
 ```sh
-(env)$ docker exec -it spotify_data_visualization-web-1 /bin/bash
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash
 (env)$ python3 -m pytest source/spotify_data/tests/tests_prepare_optimize_data.py
 (env)$ python3 -m pytest source/spotify_data/tests/tests_add_data_via_raw_csv.py
 ```
@@ -93,6 +93,7 @@ To make migrations and create superuser run:
 (env)$ python3 source/manage.py makemigrations
 (env)$ python3 source/manage.py sqlmigrate spotify_data 0001
 (env)$ python3 source/manage.py createsuperuser
+(env)$ python3 source/manage.py migrate
 ```
 
 To transfortm data from raw csv file run:
@@ -182,7 +183,7 @@ To start, you need to get a bash shell in the *postgres:14.2-alpine* container r
 
 Open new terminal window and run:
 ```sh
-(env)$ docker exec -it spotify_data_visualization-database-1 /bin/bash
+(env)$ docker exec -it spotify_data_visualization_database_1 /bin/bash
 ```
 
 Then open Postgres terminal by command:
@@ -259,8 +260,15 @@ Being in the Query Tool window type:
 INSERT INTO spotify_data_artist (artist)
 SELECT DISTINCT artist FROM objects_landing ORDER BY (artist) ASC;
 
-INSERT INTO spotify_data_title (title)
-SELECT DISTINCT title FROM objects_landing ORDER BY (title) ASC;
+INSERT INTO spotify_data_title (title, artist_id)
+SELECT sq.title, 
+sq.artist_id
+FROM
+(SELECT DISTINCT ol.title,
+ar.id AS artist_id
+FROM objects_landing AS ol 
+LEFT JOIN spotify_data_artist AS ar ON ol.artist = ar.artist
+) AS sq ORDER BY title ASC;
 
 INSERT INTO spotify_data_chart (chart)
 SELECT DISTINCT chart FROM objects_landing ORDER BY (chart) ASC;
@@ -277,49 +285,29 @@ It should take about 30-40 seconds to execute.
 After query completed type next query:
 
 ```sql
-INSERT INTO spotify_data_artisttitle (artist_id, title_id)
-SELECT DISTINCT sq.artist_id, 
-                sq.title_id 
-FROM
-		(SELECT ol.artist, 
-                ol.title, 
-                ar.id AS artist_id, 
-                ti.id AS title_id 
-		FROM objects_landing AS ol 
-		LEFT JOIN spotify_data_artist AS ar ON ol.artist = ar.artist
-		LEFT JOIN spotify_data_title AS ti ON ol.title = ti.title
-        ) AS sq 
-ORDER BY artist_id ASC, title_id ASC;
-```
-
-Press F5 or "Play Button" to execute. 
-It should take about 1-2 minutes to execute.
-After query completed type next query:
-
-```sql
 INSERT INTO spotify_data_spotifydata (date, streams, rank_id, region_id, chart_id, artist_id, title_id)
 SELECT sq.date, 
-	   sq.streams,
-	   sq.rank_id,
-	   sq.region_id,
-	   sq.chart_id,
-	   sq.artist_id,
-	   sq.title_id
+sq.streams,
+sq.rank_id,
+sq.region_id,
+sq.chart_id,
+sq.artist_id,
+sq.title_id
 FROM
-		(SELECT ol.date, 
-		 		ol.streams, 
-		 		rk.id AS rank_id,
-		 		rg.id AS region_id,
-		 		ch.id AS chart_id,
-		 		ar.id AS artist_id,
-		 		ti.id AS title_id
-		FROM objects_landing AS ol 
-		LEFT JOIN spotify_data_rank AS rk ON ol.rank = rk.rank
-		LEFT JOIN spotify_data_region AS rg ON ol.region = rg.region
-		LEFT JOIN spotify_data_chart AS ch ON ol.chart = ch.chart
-		LEFT JOIN spotify_data_artist AS ar ON ol.artist = ar.artist
-		LEFT JOIN spotify_data_title AS ti ON ol.title = ti.title
-		) AS sq;
+(SELECT ol.date, 
+ol.streams, 
+rk.id AS rank_id,
+rg.id AS region_id,
+ch.id AS chart_id,
+ar.id AS artist_id,
+ti.id AS title_id
+FROM objects_landing AS ol 
+LEFT JOIN spotify_data_rank AS rk ON ol.rank = rk.rank
+LEFT JOIN spotify_data_region AS rg ON ol.region = rg.region
+LEFT JOIN spotify_data_chart AS ch ON ol.chart = ch.chart
+LEFT JOIN spotify_data_artist AS ar ON ol.artist = ar.artist
+LEFT JOIN spotify_data_title AS ti ON ol.title = ti.title AND ol.artist = ar.artist AND ar.id = ti.artist_id)
+AS sq;
 ```
 
 Press F5 or "Play Button" to execute. 

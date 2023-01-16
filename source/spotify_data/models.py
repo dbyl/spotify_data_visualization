@@ -2,39 +2,55 @@ from django.db import models
 
 class Region(models.Model):
 
-    region = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
 
 class Rank(models.Model):
 
-    rank = models.IntegerField()
+    name = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 class Chart(models.Model):
 
-    chart = models.CharField(max_length=8)
+    name = models.CharField(max_length=8)
+
+    def __str__(self):
+        return self.name
 
 class Artist(models.Model):
 
-    artist = models.CharField(max_length=60)
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 class Title(models.Model):
 
-    title = models.CharField(max_length=60)
-    
-class ArtistTitle(models.Model):
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    name = models.CharField(max_length=60)
 
-    artist = models.ForeignKey(Artist, on_delete=models.PROTECT)
-    title = models.ForeignKey(Title, on_delete=models.PROTECT)
+    def __str__(self):
+        return f"{self.artist} - {self.name}"
+    
 
 class SpotifyData(models.Model):
 
-    title = models.ForeignKey(Title, on_delete=models.PROTECT)
-    rank = models.ForeignKey(Rank, on_delete=models.PROTECT)
+    title = models.ForeignKey(Title, on_delete=models.CASCADE)
+    rank = models.ForeignKey(Rank, on_delete=models.CASCADE)
     date = models.DateField()
-    artist = models.ForeignKey(Artist, on_delete=models.PROTECT)
-    region = models.ForeignKey(Region, on_delete=models.PROTECT)
-    chart = models.ForeignKey(Chart, on_delete=models.PROTECT)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    chart = models.ForeignKey(Chart, on_delete=models.CASCADE)
     streams = models.IntegerField()
 
+    def __str__(self):
+        return str(self.title) + ", " + str(self.date) + ", " + str(self.artist) \
+            + ", " + str(self.region) + ", " + str(self.chart) + ", " + str(self.streams) 
+ 
     
 
 
