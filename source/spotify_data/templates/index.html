@@ -1,29 +1,18 @@
-
+{% extends 'base.html' %}
+{% block nav-home %}<a class="active">Home</a>{% endblock %}
+{% block content %}
 <body>
-    <main>
-      <main class="px-3 text-center">
-        <div class="px-4  my-5 text-center">
-          <h1 class="display-5 fw-bold">Welcome to
-            Spotify analysis page!</h1>
-          <p class="lead">Website is used to vizualization data about spotify</p>
-        </div>
-  
-        <div class="container px-4 py-5 text-center" id="featured-3">
-          <h2 class="pb-2 border-bottom">Statistics</h2>
-  
-          <div class="feature col">
-            <div class="feature-icon bg-primary bg-gradient">
+    <div>
+      <h1>Welcome to Spotify Data Visualization page!</h1>
+          <p>Website is used to vizualization data about spotify</p>
+    </div>
+          <h2>Statistics</h2>
+    <div>
+    <div>
+            <div>
             </div>
             <h4>All records in database:</h4>
             <p>{{records_all}}</p>
-          </div>
-        </div>
-        <div class="btn-group mx-2">
-          <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" href="{% url 'song_rank_changes_chart' %}">Dashboard link</a>
-              </li>
-          </ul>
-        </div>
-      </main>
-  </body>
+    </div>
+</body>
+{% endblock %}

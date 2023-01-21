@@ -6,17 +6,17 @@ from spotify_data import views
 
 from spotify_data.views import (
     HomeView,
-    SongRankChangesChart,
-    spotifydata_create_view,
-    spotifydata_update_view,
-    load_titles,
+    RankChart,
+    RankChart2,
+    PopularityChart,
 )
 
 urlpatterns = [
     path("", HomeView.as_view(template_name="index.html"), name="home"),
-    path("songrankchart/", SongRankChangesChart.as_view(template_name="song_rank_changes_chart.html"), \
-    name="song_rank_changes_chart"),
-    path('add/', views.spotifydata_create_view, name='spotifydata'),
-    path('<int:pk>/', views.spotifydata_update_view, name='spotifydata_change'),
-    path('ajax/load-titles/', views.load_titles, name='ajax_load_titles'),
+    path("rankchart/", RankChart.as_view(template_name="rank_chart.html"), \
+    name="rank_chart"),
+    path("rankchart2/", RankChart2.as_view(template_name="rank_chart_2.html"), \
+    name="rank_chart_2"),
+    path("populrank/", PopularityChart.as_view(template_name="popularity_chart.html"), \
+    name="popul_chart"),
 ]

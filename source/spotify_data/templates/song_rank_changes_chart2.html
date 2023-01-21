@@ -25,7 +25,7 @@
                   {% endfor %}
             </datalist>
           </div>
-
+          <!--
           <div>
             Artist
             <input list="list_of_artists" id="3" placeholder="Choose artist" aria-label="Search"
@@ -36,16 +36,8 @@
                   {% endfor %}
             </datalist>
           </div>
+          -->
 
-          <div>
-            Title
-            <input list="list_of_titles" id="4" placeholder="Choose title" aria-label="Search"
-                 name="name">
-            <datalist id="list_of_titles">
-                  {% for name in ch_title %}
-            <option value="{{name.name}}">
-                    {% endfor %}
-          </div>
 
           <div>
             Start date
@@ -85,7 +77,7 @@
         {{region}}
       </div>
       <div>
-        {{unc}}
+        {{df}}
       </div>
     </body>
 {% endblock %}

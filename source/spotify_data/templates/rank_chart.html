@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block nav-rank-chart %}<a class="active">Rank</a>{% endblock %}
+{% block content %}
+<body>
+  <div class="desc_box">The chart shows changes in the song's ranking for user-specified parameters such as time period, region, chart, artist and title.</div>
+  <div class="form_box">
+    <form method="GET" name="form" action="{% url 'rank_chart' %}" >
+      
+      {% csrf_token %}
+      {{ rank_chart_form.as_p}}
+      <div class="button_box">
+        <button class="button b_green"><i class="fa-solid fa-chart-line fa-sm"></i>&nbsp; Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="chart_box">
+      {{ chart|safe }}
+  </div>
+</body>
+{% endblock %}

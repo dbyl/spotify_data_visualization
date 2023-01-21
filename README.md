@@ -257,27 +257,27 @@ Click once on Tables(18) and Alt+Shift+Q, the Query Tool window should appear.
 Being in the Query Tool window type:
 
 ```sql
-INSERT INTO spotify_data_artist (artist)
-SELECT DISTINCT artist FROM objects_landing ORDER BY (artist) ASC;
+INSERT INTO spotify_data_artist ("name")
+SELECT DISTINCT artist FROM objects_landing ORDER BY ("artist") ASC;
 
-INSERT INTO spotify_data_title (title, artist_id)
+INSERT INTO spotify_data_title ("name", artist_id)
 SELECT sq.title, 
 sq.artist_id
 FROM
 (SELECT DISTINCT ol.title,
 ar.id AS artist_id
 FROM objects_landing AS ol 
-LEFT JOIN spotify_data_artist AS ar ON ol.artist = ar.artist
-) AS sq ORDER BY title ASC;
+LEFT JOIN spotify_data_artist AS ar ON ol.artist = ar.name
+) AS sq ORDER BY "title" ASC;
 
-INSERT INTO spotify_data_chart (chart)
-SELECT DISTINCT chart FROM objects_landing ORDER BY (chart) ASC;
+INSERT INTO spotify_data_chart ("name")
+SELECT DISTINCT chart FROM objects_landing ORDER BY ("chart") ASC;
 
-INSERT INTO spotify_data_rank ("rank")
+INSERT INTO spotify_data_rank ("name")
 SELECT DISTINCT "rank" FROM objects_landing ORDER BY ("rank") ASC;
 
-INSERT INTO spotify_data_region (region)
-SELECT DISTINCT region FROM objects_landing ORDER BY (region) ASC;
+INSERT INTO spotify_data_region ("name")
+SELECT DISTINCT region FROM objects_landing ORDER BY ("region") ASC;
 ```
 
 Press F5 or "Play Button" to execute. 

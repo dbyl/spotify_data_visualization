@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<body>
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
@@ -10,16 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
 </head>
-
+{% block nav %}
+<div>
 <div class="topnav">
-    <a href="{% url 'home' %}"">Home</a>
-    <a class="active" href="#news">Chart 1</a>
+{% block nav-home %}<a href="{% url 'home' %}">Home</a>{% endblock %}
+{% block nav-rank-chart %}<a href="{% url 'rank_chart' %}">Rank</a>{% endblock %}
+{% block nav-rank-chart-2 %}<a href="{% url 'rank_chart_2' %}">Rank 2</a>{% endblock %}
+{% block nav-popul-chart %}<a href="{% url 'popul_chart' %}">Popularity</a>{% endblock %}
 </div>
+{% endblock %}
 
 
 {% block content %}
 {% endblock %}
 
-</html>
+</body>

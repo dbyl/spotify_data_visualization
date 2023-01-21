@@ -1,26 +1,25 @@
 .topnav {
     background-color: #333;
     overflow: hidden;
+    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
   }
   
-
 .topnav a {
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 15px 25px;
     text-decoration: none;
     font-size: 17px;
   }
   
-
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: rgb(255, 255, 255);
     color: black;
   }
   
-
 .topnav a.active {
-    background-color: #04AA6D;
-    color: white;
+    background-color: #1DB954;
+    color: rgb(255, 255, 255);
   }
