@@ -2,7 +2,7 @@
 {% block nav-popul-chart %}<a class="active">Popularity</a>{% endblock %}
 {% block content %}
 <body>
-  <div class="desc_box">The chart shows how many times songs by a particular artist have appeared in the ranking for user-specified parameters such as time period, region, chart, artists and top ranking.</div>
+  <div class="desc_box">The chart shows how many times songs by a particular artist have appeared in the ranking for user-specified parameters such as time period, region, chart, artist and top ranking.</div>
   <div class="form_box">
     <form method="GET" name="form" action="{% url 'popul_chart' %}" >
       
@@ -14,10 +14,7 @@
     </form>
   </div>
   <div class="chart_box">
-      {{ df }}
-      
+      {{ chart|safe }}
   </div>
-  <div>{{ i }}</div>
-  <div>{{ t }}</div>
 </body>
 {% endblock %}

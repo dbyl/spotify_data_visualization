@@ -66,3 +66,36 @@ class PopularityChartForm(forms.Form):
         self.fields['top_rank'].choices = Rank.objects.values("id").\
             values_list("id","name")
         self.fields['region'].initial = 68
+
+class PopularityChartForm2(forms.Form):
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    region = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    artist = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}), initial="Drake")
+    artist_2 = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}), initial="Kanye West")
+    top_rank = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+
+    def __init__(self, *args, **kwargs):
+        super(PopularityChartForm2, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['top_rank'].choices = Rank.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].initial = 68
+        self.fields['top_rank'].initial = 20
+
+class ArtistMapPopularityForm(forms.Form):
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    artist = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}), initial="Drake")
+
+    def __init__(self, *args, **kwargs):
+        super(ArtistMapPopularityForm, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")

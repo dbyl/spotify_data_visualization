@@ -9,6 +9,8 @@ from spotify_data.views import (
     RankChart,
     RankChart2,
     PopularityChart,
+    PopularityChart2,
+    ArtistMapPopularity,
 )
 
 urlpatterns = [
@@ -19,4 +21,8 @@ urlpatterns = [
     name="rank_chart_2"),
     path("populrank/", PopularityChart.as_view(template_name="popularity_chart.html"), \
     name="popul_chart"),
+    path("populrank2/", PopularityChart2.as_view(template_name="popularity_chart_2.html"), \
+    name="popul_chart_2"),
+    path("artistmappopul/", ArtistMapPopularity.as_view(template_name="artist_map_popularity.html"), \
+    name="artist_map_popul"),
 ]
