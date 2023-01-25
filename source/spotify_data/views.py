@@ -1,14 +1,5 @@
-import plotly.express as px
-import plotly.graph_objects as go
-from collections import Counter
-
-
-from django.http.response import HttpResponse
-from django.http import Http404, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Sum
 from spotify_data.models import (Region,
-                                 Rank,
-                                 Chart,
                                  Artist,
                                  Title,
                                  SpotifyData,
@@ -18,13 +9,20 @@ from spotify_data.charts import (make_song_rank_changes_chart,
                                  make_song_rank_changes_comparison_chart,
                                  make_popularity_chart,
                                  make_popularity_comparison_chart,
+                                 make_artist_popularity_map,
+                                 make_song_popularity_map,
 )
 from spotify_data.forms import (
                                 RankChartForm,
                                 RankChart2Form,
                                 PopularityChartForm,
                                 PopularityChartForm2,
-                                ArtistMapPopularityForm
+                                ArtistMapPopularityForm,
+                                SongMapPopularityForm,
+)
+
+from spotify_data.constants import (
+                                REGIONS_ID_ISO,
 )
 
 from typing import Any, Dict
@@ -228,26 +226,86 @@ class ArtistMapPopularity(TemplateView):
         s_end = self.request.GET.get("end")
         s_chart = self.request.GET.get("chart")
         s_artist = self.request.GET.get("artist")
-
-        artist_id = Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
         chart_id = s_chart
 
-        data_filtered = SpotifyData.objects.filter(date__range=(s_start, s_end), artist = artist_id,
-                 chart=chart_id).values()
-       
-        data = data_filtered.values_list("artist", "region", "streams")
-        data 
+        artist_id = Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
 
-        #titles_id = [x[0] for x in data]
-        #titles = [Title.objects.filter(id=x).values_list("name", flat=True).first() for x in titles_id]
-       
-        #fig = make_popularity_chart(titles, s_artist)
+        data_filtered_artist = list(SpotifyData.objects.filter(date__range=(s_start, s_end)\
+                ,artist = artist_id, chart=chart_id).values_list("region")\
+                .annotate(streams=Sum("streams")).exclude(region=23).order_by("region"))
 
-        #chart = fig.to_html()
+        data_filtered_all_artist = list(SpotifyData.objects.filter(date__range=(s_start, s_end)\
+                ,chart=chart_id).values_list("region").annotate(streams=Sum("streams"))\
+                .exclude(region=23).order_by("region"))
 
-        context = {#"chart": chart,
-                    "d":data,
+        regions_id = [x[0] for x in data_filtered_artist]
+        regions_iso = [REGIONS_ID_ISO[x] for x in regions_id]
+        regions_name = [Region.objects.filter(id=x).values_list("name", flat=True)\
+                    .exclude(name='Global').first() for x in regions_id\
+                     if Region.objects.filter(id=x).values_list("name", flat=True)\
+                    .exclude(name='Global').first() is not None]
+        share_in_all_streams = []
+
+        for i, j  in zip(data_filtered_artist, data_filtered_all_artist):
+            for j in data_filtered_all_artist:
+                if i[0] == j[0]:
+                    share_in_all_streams.append(i[1]/j[1]*100)
+                       
+        fig = make_artist_popularity_map(s_artist, regions_iso, regions_name, share_in_all_streams)
+
+        choropleth = fig.to_html()
+
+        context = { "choropleth": choropleth,
                    "artist_map_popularity_form": ArtistMapPopularityForm()}
+
+        return context
+    
+class SongMapPopularity(TemplateView):
+
+    model = SpotifyData
+    context_object_name = "song_map_popularity"
+    
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        
+        context = super().get_context_data(**kwargs)
+
+        s_start = self.request.GET.get("start")
+        s_end = self.request.GET.get("end")
+        s_chart = self.request.GET.get("chart")
+        s_artist = self.request.GET.get("artist")
+        s_title = self.request.GET.get("title")
+        chart_id = s_chart
+
+        artist_id = Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
+        title_id = Title.objects.filter(name=s_title).values_list("id", flat=True).first()
+
+        data_filtered_songs = list(SpotifyData.objects.filter(date__range=(s_start, s_end)\
+                ,artist = artist_id, chart=chart_id).values_list("region")\
+                .annotate(streams=Sum("streams")).exclude(region=23).order_by("region"))
+
+        data_filtered_all_artist = list(SpotifyData.objects.filter(date__range=(s_start, s_end)\
+                ,chart=chart_id).values_list("region").annotate(streams=Sum("streams"))\
+                .exclude(region=23).order_by("region"))
+
+        regions_id = [x[0] for x in data_filtered_songs]
+        regions_iso = [REGIONS_ID_ISO[x] for x in regions_id]
+        regions_name = [Region.objects.filter(id=x).values_list("name", flat=True)\
+                    .exclude(name='Global').first() for x in regions_id\
+                     if Region.objects.filter(id=x).values_list("name", flat=True)\
+                    .exclude(name='Global').first() is not None]
+        share_in_all_streams = []
+
+        for i, j  in zip(data_filtered_songs, data_filtered_all_artist):
+            for j in data_filtered_all_artist:
+                if i[0] == j[0]:
+                    share_in_all_streams.append(i[1]/j[1]*100)
+                       
+        fig = make_song_popularity_map(s_artist, s_title, regions_iso, regions_name, share_in_all_streams)
+
+        choropleth = fig.to_html()
+
+        context = { "choropleth": choropleth,
+                   "song_map_popularity_form": SongMapPopularityForm()}
 
         return context
 

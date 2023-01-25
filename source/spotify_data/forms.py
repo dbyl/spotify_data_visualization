@@ -1,5 +1,4 @@
 from django import forms
-from dynamic_forms import DynamicField, DynamicFormMixin
 from .models import *
 
 from spotify_data.models import (Region,
@@ -97,5 +96,18 @@ class ArtistMapPopularityForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(ArtistMapPopularityForm, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")
+
+class SongMapPopularityForm(forms.Form):
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    artist = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}), initial="Dua Lipa")
+    title = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}), initial="New Rules")
+
+    def __init__(self, *args, **kwargs):
+        super(SongMapPopularityForm, self).__init__(*args, **kwargs)
         self.fields['chart'].choices = Chart.objects.values("id").\
             values_list("id","name")

@@ -105,3 +105,64 @@ def make_popularity_comparison_chart(titles, titles_2, s_artist, s_artist_2):
     ))
 
     return fig
+
+
+def make_artist_popularity_map(s_artist, regions_iso, regions_name, share_in_all_streams):
+
+    fig = go.Figure(data=go.Choropleth(
+    locations = regions_iso,
+    z = share_in_all_streams,
+    text = regions_name,
+    colorscale = ["#1771F1","#1DB954"],
+    autocolorscale=False,
+    reversescale=False,
+    marker_line_color='darkgray',
+    marker_line_width=0.5,
+    colorbar_tickprefix = ' %',
+    colorbar_title = "Choosen artist share",
+    ))
+
+    fig.update_layout(
+    title=f"{s_artist}",
+    title_x=0.5,
+    geo=dict(bgcolor= '#000000', lakecolor='#242e28',
+            landcolor='#242e28',
+            subunitcolor='grey'),
+    plot_bgcolor="#000000",
+    paper_bgcolor="#000000",
+    margin=go.layout.Margin(l=45, r=45, t=45, b=45),
+    font=dict(color="white"),
+    geo_bgcolor="#000000",
+    )
+
+    return fig
+
+def make_song_popularity_map(s_artist, s_title, regions_iso, regions_name, share_in_all_streams):
+
+    fig = go.Figure(data=go.Choropleth(
+    locations = regions_iso,
+    z = share_in_all_streams,
+    text = regions_name,
+    colorscale = ["#1771F1","#1DB954"],
+    autocolorscale=False,
+    reversescale=False,
+    marker_line_color='darkgray',
+    marker_line_width=0.5,
+    colorbar_tickprefix = ' %',
+    colorbar_title = "Choosen artist share",
+    ))
+
+    fig.update_layout(
+    title=f"{s_artist} - {s_title}",
+    title_x=0.5,
+    geo=dict(bgcolor= '#000000', lakecolor='#242e28',
+            landcolor='#242e28',
+            subunitcolor='grey'),
+    plot_bgcolor="#000000",
+    paper_bgcolor="#000000",
+    margin=go.layout.Margin(l=45, r=45, t=45, b=45),
+    font=dict(color="white"),
+    geo_bgcolor="#000000",
+    )
+
+    return fig
