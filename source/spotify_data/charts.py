@@ -166,3 +166,66 @@ def make_song_popularity_map(s_artist, s_title, regions_iso, regions_name, share
     )
 
     return fig
+
+
+def make_top_streamed_artist_chart(artist_streams, artists_name, region_name):
+
+    
+    data_x = artists_name
+    data_y = artist_streams
+
+
+    fig = px.bar(template="plotly_dark")
+    fig.add_trace(go.Bar(x=data_x, y=data_y, 
+                  name=f"{region_name}", 
+                  marker_color="#1DB954", showlegend=True))
+    fig.update_layout(xaxis_title="Titles", yaxis_title="Streams",
+    title_x=0.5,
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=0.5,
+    xanchor="right",
+    x=1
+    ))
+
+    return fig
+
+def make_top_streamed_artist_comparison_chart(artist_streams, artists_name, region_name,
+                                             artist_streams_2, artists_name_2, region_name_2):
+
+    data_x = artists_name
+    data_y = artist_streams
+
+    data_x_2 = artists_name_2
+    data_y_2 = artist_streams_2
+
+
+
+
+    fig = px.bar(template="plotly_dark")
+    fig.add_trace(go.Bar(x=data_x, y=data_y, 
+                  name=f"{region_name}", 
+                  marker_color="#1DB954", showlegend=True))
+    fig.add_trace(go.Bar(x=data_x_2, y=data_y_2, 
+                  name=f"{region_name_2}", 
+                  marker_color="#1771F1", showlegend=True))
+    fig.update_layout(xaxis_title="Titles", yaxis_title="Streams",
+    title_x=0.5,
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=0.5,
+    xanchor="right",
+    x=1
+    ))
+
+    return fig
+
+def make_top_streamed_song_chart():
+
+    pass
+
+def make_top_streamed_song_comparison_chart():
+
+    pass

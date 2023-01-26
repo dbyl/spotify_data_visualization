@@ -111,3 +111,89 @@ class SongMapPopularityForm(forms.Form):
         super(SongMapPopularityForm, self).__init__(*args, **kwargs)
         self.fields['chart'].choices = Chart.objects.values("id").\
             values_list("id","name")
+
+class TopStreamedArtistsForm(forms.Form):
+
+    top_choices = ((5,5),(10,10),(15,15),(20,20),(30,30),(40,40),(50,50),(100,100))
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    region = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    top_streamed= forms.ChoiceField(required=True, choices=top_choices, widget=forms.Select(attrs={'class':'form_widgets'}))
+
+    def __init__(self, *args, **kwargs):
+        super(TopStreamedArtistsForm, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].initial = 68
+        self.fields['top_streamed'].initial = 20
+
+
+class TopStreamedArtistsForm2(forms.Form):
+
+    top_choices = ((5,5),(10,10),(15,15),(20,20),(30,30),(40,40),(50,50))
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    region = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    region_2 = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    top_streamed= forms.ChoiceField(required=True, choices=top_choices, widget=forms.Select(attrs={'class':'form_widgets'}))
+
+    def __init__(self, *args, **kwargs):
+        super(TopStreamedArtistsForm2, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].initial = 68
+        self.fields['region_2'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['region_2'].initial = 67
+        self.fields['top_streamed'].initial = 10
+
+class TopStreamedSongsForm(forms.Form):
+
+    top_choices = ((5,5),(10,10),(15,15),(20,20),(30,30),(40,40),(50,50),(100,100))
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    region = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    top_streamed= forms.ChoiceField(required=True, choices=top_choices, widget=forms.Select(attrs={'class':'form_widgets'}))
+
+    def __init__(self, *args, **kwargs):
+        super(TopStreamedSongsForm, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].initial = 68
+        self.fields['top_streamed'].initial = 20
+
+
+class TopStreamedSongsForm2(forms.Form):
+
+    top_choices = ((5,5),(10,10),(15,15),(20,20),(30,30),(40,40),(50,50))
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
+    end = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2019-01-01")
+    region = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    region_2 = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    chart = forms.ChoiceField(required=True, choices=[], widget=forms.Select(attrs={'class':'form_widgets'}))
+    top_streamed= forms.ChoiceField(required=True, choices=top_choices, widget=forms.Select(attrs={'class':'form_widgets'}))
+
+    def __init__(self, *args, **kwargs):
+        super(TopStreamedSongsForm2, self).__init__(*args, **kwargs)
+        self.fields['chart'].choices = Chart.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['region'].initial = 68
+        self.fields['region_2'].choices = Region.objects.values("id").\
+            values_list("id","name")
+        self.fields['region_2'].initial = 67
+        self.fields['top_streamed'].initial = 10

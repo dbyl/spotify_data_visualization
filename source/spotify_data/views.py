@@ -11,7 +11,12 @@ from spotify_data.charts import (make_song_rank_changes_chart,
                                  make_popularity_comparison_chart,
                                  make_artist_popularity_map,
                                  make_song_popularity_map,
+                                 make_top_streamed_artist_chart,
+                                 make_top_streamed_artist_comparison_chart,
+                                 make_top_streamed_song_chart,
+                                 make_top_streamed_song_comparison_chart
 )
+
 from spotify_data.forms import (
                                 RankChartForm,
                                 RankChart2Form,
@@ -19,6 +24,11 @@ from spotify_data.forms import (
                                 PopularityChartForm2,
                                 ArtistMapPopularityForm,
                                 SongMapPopularityForm,
+                                TopStreamedArtistsForm,
+                                TopStreamedArtistsForm2,
+                                TopStreamedSongsForm,
+                                TopStreamedSongsForm2,
+
 )
 
 from spotify_data.constants import (
@@ -249,7 +259,10 @@ class ArtistMapPopularity(TemplateView):
         for i, j  in zip(data_filtered_artist, data_filtered_all_artist):
             for j in data_filtered_all_artist:
                 if i[0] == j[0]:
-                    share_in_all_streams.append(i[1]/j[1]*100)
+                    if i[1] == 0 or j[1] == 0:
+                        share_in_all_streams.append(0)
+                    else:
+                        share_in_all_streams.append(i[1]/j[1]*100)
                        
         fig = make_artist_popularity_map(s_artist, regions_iso, regions_name, share_in_all_streams)
 
@@ -277,10 +290,10 @@ class SongMapPopularity(TemplateView):
         chart_id = s_chart
 
         artist_id = Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
-        title_id = Title.objects.filter(name=s_title).values_list("id", flat=True).first()
+        title_id = Title.objects.filter(name=s_title, artist=artist_id).values_list("id", flat=True).first()
 
         data_filtered_songs = list(SpotifyData.objects.filter(date__range=(s_start, s_end)\
-                ,artist = artist_id, chart=chart_id).values_list("region")\
+                ,artist = artist_id, title = title_id, chart=chart_id).values_list("region")\
                 .annotate(streams=Sum("streams")).exclude(region=23).order_by("region"))
 
         data_filtered_all_artist = list(SpotifyData.objects.filter(date__range=(s_start, s_end)\
@@ -298,18 +311,112 @@ class SongMapPopularity(TemplateView):
         for i, j  in zip(data_filtered_songs, data_filtered_all_artist):
             for j in data_filtered_all_artist:
                 if i[0] == j[0]:
-                    share_in_all_streams.append(i[1]/j[1]*100)
+                    if i[1] == 0 or j[1] == 0:
+                        share_in_all_streams.append(0)
+                    else:
+                        share_in_all_streams.append(i[1]/j[1]*100)
                        
         fig = make_song_popularity_map(s_artist, s_title, regions_iso, regions_name, share_in_all_streams)
 
         choropleth = fig.to_html()
 
-        context = { "choropleth": choropleth,
+        context = {"choropleth": choropleth,
                    "song_map_popularity_form": SongMapPopularityForm()}
 
         return context
 
+class TopStreamedArtistsChart(TemplateView):
 
+    model = SpotifyData
+    context_object_name = "top_streamed_artists"
+    
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        
+        context = super().get_context_data(**kwargs)
+
+        s_start = self.request.GET.get("start")
+        s_end = self.request.GET.get("end")
+        s_region = self.request.GET.get("region")
+        s_chart = self.request.GET.get("chart")
+        s_top_streamed = self.request.GET.get("top_streamed")
+        region_id = s_region
+        chart_id = s_chart
+
+        region_name = Region.objects.filter(id=region_id).values_list("name", flat=True).first()
+
+        if s_top_streamed is None:
+            s_top_streamed = 20 #any int
+
+        data_filtered = list(SpotifyData.objects.filter(date__range=(s_start, s_end),
+                 region=region_id, chart=chart_id).values_list("artist").annotate(streams=Sum("streams"))\
+                .order_by('-streams'))[:int(s_top_streamed)]
+                
+        artists_id = [x[0] for x in data_filtered]
+        artists_name = [Artist.objects.filter(id=x).values_list("name", flat=True)\
+                    .first() for x in artists_id]
+        artist_streams = [x[1] for x in data_filtered]
+    
+        fig = make_top_streamed_artist_chart(artist_streams, artists_name, region_name)
+
+        chart = fig.to_html()
+
+        context = {"chart": chart,
+                   "top_streamed_artists_form": TopStreamedArtistsForm()}
+
+        return context
+
+class TopStreamedArtistsChart2(TemplateView):
+
+    model = SpotifyData
+    context_object_name = "top_streamed_artists"
+    
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        
+        context = super().get_context_data(**kwargs)
+
+        s_start = self.request.GET.get("start")
+        s_end = self.request.GET.get("end")
+        s_region = self.request.GET.get("region")
+        s_region_2 = self.request.GET.get("region_2")
+        s_chart = self.request.GET.get("chart")
+        s_top_streamed = self.request.GET.get("top_streamed")
+        region_id = s_region
+        region_id_2 = s_region_2
+        chart_id = s_chart
+
+        region_name = Region.objects.filter(id=region_id).values_list("name", flat=True).first()
+        region_name_2 = Region.objects.filter(id=region_id_2).values_list("name", flat=True).first()
+
+        if s_top_streamed is None:
+            s_top_streamed = 10 #any int
+
+        data_filtered = list(SpotifyData.objects.filter(date__range=(s_start, s_end),
+                 region=region_id, chart=chart_id).values_list("artist").annotate(streams=Sum("streams"))\
+                .order_by('-streams'))[:int(s_top_streamed)]
+
+        data_filtered_2 = list(SpotifyData.objects.filter(date__range=(s_start, s_end),
+                 region=region_id_2, chart=chart_id).values_list("artist").annotate(streams=Sum("streams"))\
+                .order_by('-streams'))[:int(s_top_streamed)]
+                
+        artists_id = [x[0] for x in data_filtered]
+        artists_name = [Artist.objects.filter(id=x).values_list("name", flat=True)\
+                    .first() for x in artists_id]
+        artist_streams = [x[1] for x in data_filtered]
+
+        artists_id_2 = [x[0] for x in data_filtered_2]
+        artists_name_2 = [Artist.objects.filter(id=x).values_list("name", flat=True)\
+                    .first() for x in artists_id_2]
+        artist_streams_2 = [x[1] for x in data_filtered_2]
+    
+        fig = make_top_streamed_artist_comparison_chart(artist_streams, artists_name, region_name,
+                                             artist_streams_2, artists_name_2, region_name_2)
+
+        chart = fig.to_html()
+
+        context = {"chart": chart,
+                   "top_streamed_artists_form_2": TopStreamedArtistsForm2()}
+
+        return context
 
 '''def autocomplete_artist(request):
     if 'term' in request.GET:

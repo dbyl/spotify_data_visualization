@@ -12,6 +12,8 @@ from spotify_data.views import (
     PopularityChart2,
     ArtistMapPopularity,
     SongMapPopularity,
+    TopStreamedArtistsChart,
+    TopStreamedArtistsChart2
 )
 
 urlpatterns = [
@@ -28,4 +30,8 @@ urlpatterns = [
     name="artist_map_popul"),
     path("songmappopul/", SongMapPopularity.as_view(template_name="song_map_popularity.html"), \
     name="song_map_popul"),
+    path("topstreamedart/", TopStreamedArtistsChart.as_view(template_name="top_streamed_artists_chart.html"), \
+    name="top_streamed_artists_chart"),
+    path("topstreamedart2/", TopStreamedArtistsChart2.as_view(template_name="top_streamed_artists_chart_2.html"), \
+    name="top_streamed_artists_chart_2"),
 ]
