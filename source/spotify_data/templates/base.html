@@ -16,35 +16,42 @@
 {% block nav-home %}
 <a href="{% url 'home' %}">Home</a>
 {% endblock %}
-{% block nav-rank-chart %}
-<a href="{% url 'rank_chart' %}">Rank</a>
-{% endblock %}
-{% block nav-rank-chart-2 %}
-<a href="{% url 'rank_chart_2' %}">Rank 2</a>
-{% endblock %}
-{% block nav-popul-chart %}
-<a href="{% url 'popul_chart' %}">Popularity</a>
-{% endblock %}
-{% block nav-popul-chart-2 %}
-<a href="{% url 'popul_chart_2' %}">Popularity 2</a>
-{% endblock %}
+<div class="dropdown">
+    <button class="dropbtn">Charts
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+        {% block nav-rank-chart %}
+        <a href="{% url 'rank_chart' %}">Ranking Changes</a>
+        {% endblock%}
+        {% block nav-rank-chart-2 %}
+        <a href="{% url 'rank_chart_2' %}">Ranking Changes - Comparison</a>
+        {% endblock %}
+        {% block nav-popul-chart %}
+        <a href="{% url 'popul_chart' %}">Popularity Changes</a>
+        {% endblock %}
+        {% block nav-popul-chart-2 %}
+        <a href="{% url 'popul_chart_2' %}">Popularity Changes - Comparison</a>
+        {% endblock %}
+        {% block nav-top-artists-chart %}
+        <a href="{% url 'top_streamed_artists_chart' %}">Top Streamed Artists</a>
+        {% endblock %}
+        {% block nav-top-artists-chart-2 %}
+        <a href="{% url 'top_streamed_artists_chart_2' %}">Top Streamed Artists - Comparison</a>
+        {% endblock %}
+        {% block nav-top-songs-chart %}
+        <a href="{% url 'top_streamed_songs_chart' %}">Top Streamed Songs</a>
+        {% endblock %}
+        {% block nav-top-songs-chart-2 %}
+        <a href="{% url 'top_streamed_songs_chart_2' %}">Top Streamed Songs - Comparison</a>
+        {% endblock %}
+    </div>
+</div>
 {% block nav-artist-map-chart %}
-<a href="{% url 'artist_map_popul' %}">Artist Map</a>
+<a href="{% url 'artist_map_popul' %}">Artist Popularity Map</a>
 {% endblock %}
 {% block nav-song-map-chart %}
-<a href="{% url 'song_map_popul' %}">Song Map</a>
-{% endblock %}
-{% block nav-top-artists-chart %}
-<a href="{% url 'top_streamed_artists_chart' %}">Top Streamed Artists</a>
-{% endblock %}
-{% block nav-top-artists-chart-2 %}
-<a href="{% url 'top_streamed_artists_chart_2' %}">Top Streamed Artists 2</a>
-{% endblock %}
-{% block nav-top-songs-chart %}
-<a href="{% url 'top_streamed_songs_chart' %}">Top Streamed Songs</a>
-{% endblock %}
-{% block nav-top-songs-chart-2 %}
-<a href="{% url 'top_streamed_songs_chart_2' %}">Top Streamed Songs 2</a>
+<a href="{% url 'song_map_popul' %}">Song Popularity Map</a>
 {% endblock %}
 </div>
 {% endblock %}

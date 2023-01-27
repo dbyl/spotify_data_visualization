@@ -2,7 +2,8 @@
 {% block nav-top-artists-chart %}<a class="active">Top Streamed Artists</a>{% endblock %}
 {% block content %}
 <body>
-  <div class="desc_box">Top</div>
+  <div class="desc_box">The chart shows the most streamed artists for 
+    user-specified parameters such as time period, region, chart and top.</div>
   <div class="form_box">
     <form method="GET" name="form" action="{% url 'top_streamed_artists_chart' %}" >
       {% csrf_token %}
