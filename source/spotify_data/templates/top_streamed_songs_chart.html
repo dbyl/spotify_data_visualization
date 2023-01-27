@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block nav-top-songs-chart %}<a class="active">Top Streamed Songs</a>{% endblock %}
+{% block content %}
+<body>
+  <div class="desc_box">Top</div>
+  <div class="form_box">
+    <form method="GET" name="form" action="{% url 'top_streamed_songs_chart' %}" >
+      {% csrf_token %}
+      {{ top_streamed_songs_form.as_p}}
+      <div class="button_box">
+        <button class="button b_green"><i class="fa-solid fa-chart-line fa-sm"></i>&nbsp; Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="chart_box">
+      {{ chart|safe }}
+  </div>
+</body>
+{% endblock %}
