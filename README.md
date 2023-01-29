@@ -78,7 +78,7 @@ To test management commands during application running open new terminal window 
 ```sh
 (env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash
 (env)$ python3 -m pytest source/spotify_data/tests/tests_prepare_optimize_data.py
-(env)$ python3 -m pytest source/spotify_data/tests/tests_add_data_via_raw_csv.py
+(env)$ python3 -m pytest source/spotify_data/tests/tests_add_data_with_django_orm.py
 ```
 
 Before next steps you have to download dataset from: https://www.kaggle.com/datasets/dhruvildave/spotify-charts
@@ -88,7 +88,7 @@ Before next steps you have to download dataset from: https://www.kaggle.com/data
 If project is setting up for the first time make sure that in source/spotify_data/makemigrations exists only one file - __init__.py. 
 To make migrations and create superuser run:
 ```sh
-(env)$ docker exec -it spotify_data_visualization-web-1 /bin/bash
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash
 (env)$ python3 source/manage.py migrate
 (env)$ python3 source/manage.py makemigrations
 (env)$ python3 source/manage.py sqlmigrate spotify_data 0001
@@ -98,7 +98,7 @@ To make migrations and create superuser run:
 
 To transfortm data from raw csv file run:
 ```sh
-(env)$ docker exec -it spotify_data_visualization-web-1 /bin/bash
+(env)$ docker exec -it spotify_data_visualization_web_1 /bin/bash
 (env)$ python3 source/manage.py prepare_optimize_data source/spotify_data/data/spotify_charts.csv source/spotify_data/data/ spotify_charts.csv
 ```
 

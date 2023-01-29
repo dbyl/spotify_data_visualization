@@ -11,8 +11,7 @@ from spotify_data.models import (SpotifyData,
                      Rank,
                      Chart,
                      Artist,
-                     Title,
-                     ArtistTitle)
+                     Title)
 
 
 class Command(BaseCommand):
@@ -33,7 +32,7 @@ class Command(BaseCommand):
 
     def read_csv(self, directory):
         df = pd.read_csv(directory)
-        return df[0:1000]
+        return df
 
     def load_to_db(self, df):
         bad = 0
@@ -42,29 +41,26 @@ class Command(BaseCommand):
         for _, row in df.iterrows():
             try:
                 region_obj, _ = Region.objects.get_or_create(
-                    region=row["region"],
+                    name=row["region"],
                 )
                 rank_obj, _ = Rank.objects.get_or_create(
-                    rank=row["rank"],
+                    name=row["rank"],
                 )
                 chart_obj, _ = Chart.objects.get_or_create(
-                    chart=row["chart"],
+                    name=row["chart"],
                 )
                 artist_obj, _ = Artist.objects.get_or_create(
-                    artist=row["artist"],
+                    name=row["artist"],
                 )
-                title_obj, _ = Title.objects.get_or_create(
-                    title=row["title"],
-                )
-                arttit_obj, _ = ArtistTitle.objects.update_or_create(
+                title_obj, _ = Title.objects.update_or_create(
                     artist=artist_obj,
-                    title=title_obj,
+                    name=row["title"],
                 )
                 spotifydata_obj, _ = SpotifyData.objects.update_or_create(
-                    title=arttit_obj,
+                    title=title_obj,
                     rank=rank_obj,
                     date=row["date"],
-                    artist=arttit_obj,
+                    artist=artist_obj,
                     region=region_obj,
                     chart=chart_obj,
                     streams=row["streams"],
@@ -78,14 +74,4 @@ class Command(BaseCommand):
                 with open("data_load_logging.txt", "w") as bad_row:
                     bad_row.write(
                         f"Error message: {e} \n"
-                        + f"time: {current_time}, \n"
-                        + f"title: {row['title']}, type: {row['title']} \n"
-                        + f"rank: {int(row['rank'])}, type: {int(row['rank'])} \n"
-                        + f"date: {row['date']}, type: {row['date']} \n"
-                        + f"artist: {row['artist']}, type: {row['artist']} \n"
-                        + f"region: {row['region']}, type: {row['region']} \n"
-                        + f"chart: {row['chart']}, type: {row['chart']} \n"
-                        + f"streams: {int(row['streams'])}, type: {int(row['streams'])} \n"
-                        + "-" * 30
-                        + "\n"
                     )
