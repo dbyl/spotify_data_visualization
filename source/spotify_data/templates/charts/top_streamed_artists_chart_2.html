@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block nav-top-artists-chart-2 %}<a class="active">Top Streamed Artists - Comparison</a>{% endblock %}
+{% block content %}
+<body>
+  <div class="desc_box">The chart shows a regions comparison of the most streamed artists for 
+    user-specified parameters such as time period, regions, chart and top.</div>
+  <div class="form_box">
+    <form method="GET" name="form" action="{% url 'top_streamed_artists_chart_2' %}" >
+      {% csrf_token %}
+      {{ top_streamed_artists_form_2.as_p}}
+      <div class="button_box">
+        <button class="button b_green"><i class="fa-solid fa-chart-line fa-sm"></i>&nbsp; Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="chart_box">
+      {{ chart|safe }}
+  </div>
+</body>
+{% endblock %}

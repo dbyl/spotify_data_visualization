@@ -1,1 +1,60 @@
-Hello Docker
+<body>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+{% block nav %}
+<div>
+<div class="topnav">
+{% block nav-home %}
+<a href="{% url 'home' %}">Home</a>
+{% endblock %}
+<div class="dropdown">
+    <button class="dropbtn">Charts
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+        {% block nav-rank-chart %}
+        <a href="{% url 'rank_chart' %}">Ranking Changes</a>
+        {% endblock%}
+        {% block nav-rank-chart-2 %}
+        <a href="{% url 'rank_chart_2' %}">Ranking Changes - Comparison</a>
+        {% endblock %}
+        {% block nav-popul-chart %}
+        <a href="{% url 'popul_chart' %}">Popularity Changes</a>
+        {% endblock %}
+        {% block nav-popul-chart-2 %}
+        <a href="{% url 'popul_chart_2' %}">Popularity Changes - Comparison</a>
+        {% endblock %}
+        {% block nav-top-artists-chart %}
+        <a href="{% url 'top_streamed_artists_chart' %}">Top Streamed Artists</a>
+        {% endblock %}
+        {% block nav-top-artists-chart-2 %}
+        <a href="{% url 'top_streamed_artists_chart_2' %}">Top Streamed Artists - Comparison</a>
+        {% endblock %}
+        {% block nav-top-songs-chart %}
+        <a href="{% url 'top_streamed_songs_chart' %}">Top Streamed Songs</a>
+        {% endblock %}
+        {% block nav-top-songs-chart-2 %}
+        <a href="{% url 'top_streamed_songs_chart_2' %}">Top Streamed Songs - Comparison</a>
+        {% endblock %}
+    </div>
+</div>
+{% block nav-artist-map-chart %}
+<a href="{% url 'artist_map_popul' %}">Artist Popularity Map</a>
+{% endblock %}
+{% block nav-song-map-chart %}
+<a href="{% url 'song_map_popul' %}">Song Popularity Map</a>
+{% endblock %}
+</div>
+{% endblock %}
+{% block content %}
+{% endblock %}
+</body>

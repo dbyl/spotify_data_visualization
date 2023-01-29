@@ -5,8 +5,8 @@ asgiref==3.5.2
 asttokens==2.0.8
 attrs==22.1.0
 backcall==0.2.0
-backports.zoneinfo==0.2.1;python_version<"3.9"
 beautifulsoup4==4.11.1
+black==22.10.0
 bleach==5.0.1
 certifi==2022.9.24
 cffi==1.15.1
@@ -31,6 +31,8 @@ exceptiongroup==1.0.4
 executing==1.1.0
 fastjsonschema==2.16.2
 filelock==3.8.0
+fontawesome==5.10.1.post1
+fontawesomefree==6.2.1
 fonttools==4.37.4
 fsspec==2022.10.0
 graphviz==0.20.1
@@ -42,6 +44,7 @@ iniconfig==1.1.1
 ipykernel==6.16.0
 ipython==8.5.0
 ipython-genutils==0.2.0
+isort==5.10.1
 jedi==0.18.1
 Jinja2==3.1.2
 jsonschema==4.16.0
@@ -90,6 +93,7 @@ Pygments==2.13.0
 pyparsing==3.0.9
 pyrsistent==0.18.1
 pytest==7.2.0
+pytest-cov==4.0.0
 pytest-django==4.5.2
 python-dateutil==2.8.2
 pytz==2022.4

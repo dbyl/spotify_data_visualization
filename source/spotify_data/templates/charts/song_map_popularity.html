@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block nav-song-map-chart %}<a class="active">Song Popularity Map</a>{% endblock %}
+{% block content %}
+<body>
+  <div class="desc_box">The map shows the percentage of streams for the selected title in the total pool of all artists streams for each region.</div>
+  <div class="form_box">
+    <form method="GET" name="form" action="{% url 'song_map_popul' %}" >
+      {% csrf_token %}
+      {{ song_map_popularity_form.as_p}}
+      <div class="button_box">
+        <button class="button b_green"><i class="fa-solid fa-chart-line fa-sm"></i>&nbsp; Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="chart_box">
+      {{ choropleth|safe }}
+  </div>
+</body>
+{% endblock %}
