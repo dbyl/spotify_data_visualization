@@ -40,4 +40,6 @@ urlpatterns = [
     name="top_streamed_songs_chart"),
     path("topstreamedsongs2/", TopStreamedSongsChart2.as_view(template_name="charts/top_streamed_songs_chart_2.html"), \
     name="top_streamed_songs_chart_2"),
+    path("register/", views.register_page, name="register"),
+    path("login/", views.login_page, name="login"),
 ]

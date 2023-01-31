@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import *
 
 from spotify_data.models import (Region,
@@ -197,3 +200,10 @@ class TopStreamedSongsForm2(forms.Form):
             values_list("id","name")
         self.fields['region_2'].initial = 67
         self.fields['top_streamed'].initial = 10
+
+
+class CreateUserForm(UserCreationForm):
+
+    class Meta:
+        model = User 
+        fields = ["username", "email", "password1", "password2"]

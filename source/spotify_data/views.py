@@ -1,4 +1,9 @@
 from django.db.models import Sum
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
 from spotify_data.models import (Region,
                                  Artist,
                                  Title,
@@ -28,6 +33,7 @@ from spotify_data.forms import (
                                 TopStreamedArtistsForm2,
                                 TopStreamedSongsForm,
                                 TopStreamedSongsForm2,
+                                CreateUserForm,
 )
 
 from spotify_data.constants import (
@@ -510,3 +516,24 @@ class TopStreamedSongsChart2(TemplateView):
 
         return context
 
+def register_page(request):
+
+    form = CreateUserForm()
+
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get("username")
+            messages.success(request, "Account was created for " + user)
+            return redirect("login")
+
+    context = {"form":form}
+
+    return render(request, "accounts/register.html", context)
+
+def login_page(request):
+
+    context = {}
+
+    return render(request, "accounts/login.html", context)
