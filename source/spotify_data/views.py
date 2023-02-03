@@ -53,7 +53,18 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["records_all"] = SpotifyData.objects.all().count()
+
+        all_records = SpotifyData.objects.all().count()
+        all_artists = Artist.objects.all().count()
+        all_regions = Region.objects.all().count()
+        all_titles = Title.objects.all().count()
+
+        context = {"all_records":all_records,
+                    "all_artists":all_artists,
+                    "all_titles":all_titles,
+                    "all_regions":all_regions,
+        }
+
 
         return context
 
@@ -140,9 +151,7 @@ class RankChart2(TemplateView):
         context = {"chart": chart,
                 "rank_chart_2_form": RankChart2Form(),
                 "x": data_x,
-                "y": data_y
-
-        }
+                "y": data_y}
 
         return context
 
