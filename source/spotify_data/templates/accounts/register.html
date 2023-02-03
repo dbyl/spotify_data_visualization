@@ -1,6 +1,25 @@
-<h3>Register</h3>
+{% extends 'base.html' %}
+{% block content %}
 
-<form method="POST" action=""> 
+<div class="form_box">
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+  
+    <div class="button_box">
+      <button class="button b_green">Register</button>
+    </div>
+    <div>
+      <p>Already have an account? <a href="{% url 'login' %}">Sign in</a>.</p>
+    </div>
+</form>
+</div>
+
+  
+{% endblock %}
+
+
+<!--form method="POST" action=""> 
     {% csrf_token %}
     {{form.username.label}}
     {{form.username}}
@@ -15,4 +34,4 @@
     {{form.password2}}
     <input type="submit" name="Create User">
 </form> 
-<div> {{form.errors}}</div>
+<div> {{form.errors}}</div-->

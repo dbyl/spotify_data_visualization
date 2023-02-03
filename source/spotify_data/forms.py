@@ -204,6 +204,11 @@ class TopStreamedSongsForm2(forms.Form):
 
 class CreateUserForm(UserCreationForm):
 
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+    password1 = forms.CharField(label='Password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    password2 = forms.CharField(label='Repeat Password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
     class Meta:
         model = User 
         fields = ["username", "email", "password1", "password2"]
