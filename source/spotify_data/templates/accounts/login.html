@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form_box">
+<form method="POST" action="">
+    {% csrf_token %}
+    {{login_form.as_p}}
+  
+    <div class="button_box">
+      <button class="button b_green">Log In</button>
+    </div>
+    <div class="centering_box">
+      <p>Don't have an account? <a class="font_url" href="{% url 'register' %}">Sign Up</a></p>
+    </div>
+    <div class="centering_box">
+      {% for message in messages %}
+      <p id="messages">{{message}}</p>
+      {% endfor %}
+  </div>
+</form>
+</div>
+
+{% endblock %}

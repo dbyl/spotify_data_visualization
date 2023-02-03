@@ -1,4 +1,10 @@
 from django.db.models import Sum
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+
 from spotify_data.models import (Region,
                                  Artist,
                                  Title,
@@ -28,6 +34,8 @@ from spotify_data.forms import (
                                 TopStreamedArtistsForm2,
                                 TopStreamedSongsForm,
                                 TopStreamedSongsForm2,
+                                CreateUserForm,
+                                LoginUserForm,
 )
 
 from spotify_data.constants import (
@@ -45,7 +53,18 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["records_all"] = SpotifyData.objects.all().count()
+
+        all_records = SpotifyData.objects.all().count()
+        all_artists = Artist.objects.all().count()
+        all_regions = Region.objects.all().count()
+        all_titles = Title.objects.all().count()
+
+        context = {"all_records":all_records,
+                    "all_artists":all_artists,
+                    "all_titles":all_titles,
+                    "all_regions":all_regions,
+        }
+
 
         return context
 
@@ -132,9 +151,7 @@ class RankChart2(TemplateView):
         context = {"chart": chart,
                 "rank_chart_2_form": RankChart2Form(),
                 "x": data_x,
-                "y": data_y
-
-        }
+                "y": data_y}
 
         return context
 
@@ -510,3 +527,39 @@ class TopStreamedSongsChart2(TemplateView):
 
         return context
 
+def register_page(request):
+
+    register_form = CreateUserForm()
+
+    if request.method == "POST":
+        register_form = CreateUserForm(request.POST)
+        if register_form.is_valid():
+            register_form.save()
+            user = register_form.cleaned_data.get("username")
+            messages.success(request, "Account was created for " + user)
+            return redirect("login")
+
+    context = {"register_form":register_form}
+
+    return render(request, "accounts/register.html", context)
+
+def login_page(request):
+
+    login_form = LoginUserForm()
+
+    if request.method == "POST":
+        login_form = LoginUserForm(request.POST)
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.info(request, "Username or password is incorrect")
+        
+    context = {"login_form":login_form}
+
+    return render(request, "accounts/login.html", context)

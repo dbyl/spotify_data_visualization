@@ -8,17 +8,36 @@
     margin: 0px auto;
 }
 
+
+.home_box {
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
+    width: 1200px;
+    height: 600px;
+    margin: 0px auto;
+}
+
+.statistics_box {
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    margin: 0px auto;
+}
+
+
 .button_box {
     padding: 1px;
 }
 
 .form_box {
     display: flex;
-    padding: 1px;
+    padding: 15px;
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    text-transform: capitalize;
+    text-transform: none;
 }
 
 .form_widgets {
@@ -44,6 +63,14 @@
     justify-content: center;
     align-items: center;
     display:flex;
-    padding: 5px;
+    margin-top: 20px;
     font-size: 18px;
 }
+
+.centering_box {
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    padding: 5px;
+}
+

@@ -2,10 +2,11 @@
 @import url("boxes.css");
 @import url("navbar.css");
 
+
 .font {
     color: rgb(255, 255, 255);
     font-size: 13px;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 .body, html {
@@ -15,3 +16,19 @@
     height:100%;
     font-family: 'Nunito', sans-serif;
 }
+
+.font_url {
+    color: #1DB954;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.column {
+    flex: 50%;
+    justify-content: center;
+    align-items: center;
+  }

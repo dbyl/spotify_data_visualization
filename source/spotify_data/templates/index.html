@@ -2,17 +2,35 @@
 {% block nav-home %}<a class="active">Home</a>{% endblock %}
 {% block content %}
 <body>
+<div class="home_box">
     <div>
-      <h1>Welcome to Spotify Data Visualization page!</h1>
-          <p>Website is used to vizualization data about spotify</p>
+      <h1 class="centering_box">Welcome to Spotify Data Visualization page!</h1>
+        <p>Web application is used to data visualisation based on all the “Top 200” and “Viral 50” charts published globally by Spotify since 01.01.2017 to 31.12.2021.
+            Data are stored in PostgreSQL relational database. App has a feature of presenting user-selected data on charts and choropleth maps and creating an account. 
+            The application is still under development, more features will be added soon. 
+            You can analyze the data yourself using application functionalities.</p>
     </div>
-          <h2>Statistics</h2>
-    <div>
-    <div>
-            <div>
+    <div class="statistics_box">
+        <h2 class="centering_box">Statistics:</h2>
+        <div class="row">
+            <div class="column">
+                <h4 class="centering_box">Records in database:</h4>
+                <p class="centering_box">{{all_records}}</p>
+                <h4 class="centering_box">Artists in database:</h4>
+                <p class="centering_box">{{all_artists}}</p>
             </div>
-            <h4>All records in database:</h4>
-            <p>{{records_all}}</p>
+            <div class="column">            
+                <h4 class="centering_box">Songs in database:</h4>
+                <p class="centering_box">{{all_titles}}</p>
+                <h4 class="centering_box">Regions in database:</h4>
+                <p class="centering_box">{{all_regions}}</p>
+            </div>
+        </div>
     </div>
+    <div class="centering_box">
+        <p class="centering_box">Create an account and log in for extra features: </p>
+        <p><a class="font_url" href="{% url 'register' %}">Click here to sign up.</a></p>
+    </div>
+</div> 
 </body>
 {% endblock %}
