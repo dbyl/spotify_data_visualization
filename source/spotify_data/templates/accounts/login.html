@@ -1,1 +1,25 @@
-<h3>Login</h3>
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form_box">
+<form method="POST" action="">
+    {% csrf_token %}
+    {{login_form.as_p}}
+  
+    <div class="button_box">
+      <button class="button b_green">Login</button>
+    </div>
+    <div>
+      <p>Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a></p>
+    </div>
+</form>
+</div>
+
+<div>
+    {% for message in messages %}
+    <p id="messages">{{message}}</p>
+    {% endfor %}
+</div>
+  
+{% endblock %}

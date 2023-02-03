@@ -212,3 +212,11 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User 
         fields = ["username", "email", "password1", "password2"]
+
+
+class LoginUserForm(forms.Form):
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+    password1 = forms.CharField(label='Password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
+
