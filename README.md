@@ -11,15 +11,47 @@ The project consists of two parts:
 1) Spotify Data overview and preparation of charts to be used in the application - that part is completed. 
 2) Implementation of Django and creation usable program allowing the user to decide what data to include in the charts.
 
-## 1 part - Spotify Data Overview 
+## Images from Website 
 
+Home page
+![](images/1_homepage.png)
+
+Dropdown list of charts
+![](images/1.5_dropdown_charts.png)
+
+Creating an Account page
+![](images/2_register.png)
+
+Creating an Account - validation
+![](images/3_register_validation.png)
+
+Log in page
+![](images/4_login.png)
+
+Example chart - Popularity Comparison Chart
+![](images/5_songs_in_ranks_comp.png)
+
+Example chart - Ranking Changes
+![](images/6_ranking_changes.png)
+
+Example chart - Top Streamed Artists 
+![](images/7_top_streamed.png)
+
+Example chart - Artist Popularity Map 
+![](images/8_artist_popul.png)
+
+Example chart - Song Popularity Map 
+![](images/9_songs_popul.png)
+
+Each chart/choropleth is interactive
+![](images/10_interactive_charts.png)
+
+
+## 1 part - Spotify Data Overview 
 
 Because of the large amount of data, it was necessary to open and optimize data with Dask before exploring data in Pandas Dataframe. The dataset overview was proceeded in Jupyter Notebook with graph made with Plotly Express.
 
 *Sample images of charts from Jupyter Notebook Analysis*
-
-Top streamed songs in choosen region
-![](images/top_streamed_regions_c.png)
 
 Top streamed artists in choosen regions
 ![](images/top_streamed_art_reg_com.png)
@@ -27,16 +59,11 @@ Top streamed artists in choosen regions
 Songs occurance in ranking comparison for choosen region
 ![](images/songs_occur_in_rank_com.png)
 
-Percentage share of artist in all streams (world map)
+Percentage share of artist in all streams (choropleth)
 ![](images/per_share_artist_map.png)
-
-Songs rank changes over time
-![](images/song_rank_changes_com.png)
 
 
 ## 2 part - Django App implementation 
-
-
 
 ## Setup
 
