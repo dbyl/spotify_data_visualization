@@ -24,6 +24,12 @@
     color: black;
   }
 
+.topnav-right {
+    float: right;
+    background-color: #1771F1
+  }
+
+
 .dropdown {
     float: left;
     overflow: hidden;
@@ -70,3 +76,4 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
+

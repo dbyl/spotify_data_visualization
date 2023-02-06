@@ -550,7 +550,7 @@ def login_page(request):
     if request.method == "POST":
         login_form = LoginUserForm(request.POST)
         username = request.POST.get("username")
-        password = request.POST.get("password")
+        password = request.POST.get("password1")
 
         user = authenticate(request, username=username, password=password)
 
@@ -563,3 +563,9 @@ def login_page(request):
     context = {"login_form":login_form}
 
     return render(request, "accounts/login.html", context)
+
+def logout_user(request):
+
+    logout(request)
+
+    return redirect("login")

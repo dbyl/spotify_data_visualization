@@ -53,6 +53,11 @@
 {% block nav-song-map-chart %}
 <a href="{% url 'song_map_popul' %}">Song Popularity Map</a>
 {% endblock %}
+<div class="topnav-right">
+{% block logout %}
+<a href="{% url 'logout' %}">Hello, {{request.user}} Logout</a>
+{% endblock %}
+</div>
 </div>
 {% endblock %}
 {% block content %}
