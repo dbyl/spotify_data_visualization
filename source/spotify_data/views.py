@@ -1,7 +1,7 @@
 from django.db.models import Sum
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
@@ -45,6 +45,7 @@ from spotify_data.constants import (
 from typing import Any, Dict
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+
 
 class HomeView(ListView):
 
@@ -282,8 +283,12 @@ class ArtistMapPopularity(TemplateView):
                    "artist_map_popularity_form": ArtistMapPopularityForm()}
 
         return context
-    
-class SongMapPopularity(TemplateView):
+
+ 
+class SongMapPopularity(LoginRequiredMixin, TemplateView):
+
+    login_url = "login_required"
+    redirect_field_name = 'redirect_to'
 
     model = SpotifyData
     context_object_name = "song_map_popularity"
@@ -531,19 +536,46 @@ def register_page(request):
 
     register_form = CreateUserForm()
 
-    if request.method == "POST":
-        register_form = CreateUserForm(request.POST)
-        if register_form.is_valid():
-            register_form.save()
-            user = register_form.cleaned_data.get("username")
-            messages.success(request, "Account was created for " + user)
-            return redirect("login")
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        if request.method == "POST":
+            register_form = CreateUserForm(request.POST)
+            if register_form.is_valid():
+                register_form.save()
+                user = register_form.cleaned_data.get("username")
+                messages.success(request, "Account was created for " + user)
+                return redirect("login")
 
     context = {"register_form":register_form}
 
     return render(request, "accounts/register.html", context)
 
 def login_page(request):
+
+    login_form = LoginUserForm()
+
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        if request.method == "POST":
+            login_form = LoginUserForm(request.POST)
+            username = request.POST.get("username")
+            password = request.POST.get("password1")
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                messages.info(request, "Username or password is incorrect")
+        
+    context = {"login_form":login_form}
+
+    return render(request, "accounts/login.html", context)
+
+def login_required(request):
 
     login_form = LoginUserForm()
 
@@ -556,13 +588,13 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
-            return redirect("home")
+            return redirect("/songmappopul/")
         else:
             messages.info(request, "Username or password is incorrect")
         
     context = {"login_form":login_form}
 
-    return render(request, "accounts/login.html", context)
+    return render(request, "accounts/login_required.html", context)
 
 def logout_user(request):
 

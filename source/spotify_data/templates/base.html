@@ -55,7 +55,11 @@
 {% endblock %}
 <div class="topnav-right">
 {% block logout %}
-<a href="{% url 'logout' %}">Hello, {{request.user}} Logout</a>
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}">Hello, {{request.user}} Log Out</a>
+{% else %}
+<a href="{% url 'logout' %}">Hello, {{request.user}} Log In</a>
+{% endif %}
 {% endblock %}
 </div>
 </div>
