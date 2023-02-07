@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from spotify_data import views
 
 
@@ -19,6 +20,16 @@ from spotify_data.views import (
 )
 
 urlpatterns = [
+    path("register/", views.register_page, name="register"),
+    path("login/", views.login_page, name="login"),
+    path("login_required/", views.login_required, name="login_required"),
+    path("logout/", views.logout_user, name="logout"),
+    path("reset_password/", auth_views.PasswordResetView.as_view(), name="reset_password"),
+    path("reset_password_sent/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path("reset_password_complete/", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+
+
     path("", HomeView.as_view(template_name="index.html"), name="home"),
     path("rankchart/", RankChart.as_view(template_name="charts/rank_chart.html"), \
     name="rank_chart"),
@@ -40,8 +51,4 @@ urlpatterns = [
     name="top_streamed_songs_chart"),
     path("topstreamedsongs2/", TopStreamedSongsChart2.as_view(template_name="charts/top_streamed_songs_chart_2.html"), \
     name="top_streamed_songs_chart_2"),
-    path("register/", views.register_page, name="register"),
-    path("login/", views.login_page, name="login"),
-    path("login_required/", views.login_required, name="login_required"),
-    path("logout/", views.logout_user, name="logout"),
 ]
