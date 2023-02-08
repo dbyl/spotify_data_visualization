@@ -3,6 +3,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from spotify_data import views
+from spotify_data.forms import (PassResetForm,
+                                PassSetForm)
 
 
 from spotify_data.views import (
@@ -24,11 +26,10 @@ urlpatterns = [
     path("login/", views.login_page, name="login"),
     path("login_required/", views.login_required, name="login_required"),
     path("logout/", views.logout_user, name="logout"),
-    path("reset_password/", auth_views.PasswordResetView.as_view(), name="reset_password"),
-    path("reset_password_sent/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    path("reset_password_complete/", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
-
+    path("reset_password/", auth_views.PasswordResetView.as_view(form_class=PassResetForm, template_name="accounts/password_reset.html"), name="reset_password"),
+    path("reset_password_sent/", auth_views.PasswordResetDoneView.as_view(template_name="accounts/password_sent.html"), name="password_reset_done"),
+    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(form_class=PassSetForm, template_name="accounts/password_reset_form.html"), name="password_reset_confirm"),
+    path("reset_password_complete/", auth_views.PasswordResetCompleteView.as_view(template_name="accounts/password_sent_complete.html"), name="password_reset_complete"),
 
     path("", HomeView.as_view(template_name="index.html"), name="home"),
     path("rankchart/", RankChart.as_view(template_name="charts/rank_chart.html"), \

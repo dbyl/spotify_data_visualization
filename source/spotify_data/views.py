@@ -47,6 +47,76 @@ from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 
 
+def register_page(request):
+
+    register_form = CreateUserForm()
+
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        if request.method == "POST":
+            register_form = CreateUserForm(request.POST)
+            if register_form.is_valid():
+                register_form.save()
+                user = register_form.cleaned_data.get("username")
+                messages.success(request, "Account was created for " + user)
+                return redirect("login")
+
+    context = {"register_form":register_form}
+
+    return render(request, "accounts/register.html", context)
+
+def login_page(request):
+
+    login_form = LoginUserForm()
+
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        if request.method == "POST":
+            login_form = LoginUserForm(request.POST)
+            username = request.POST.get("username")
+            password = request.POST.get("password1")
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                messages.info(request, "Username or password is incorrect")
+        
+    context = {"login_form":login_form}
+
+    return render(request, "accounts/login.html", context)
+
+def login_required(request):
+
+    login_form = LoginUserForm()
+
+    if request.method == "POST":
+        login_form = LoginUserForm(request.POST)
+        username = request.POST.get("username")
+        password = request.POST.get("password1")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("/songmappopul/")
+        else:
+            messages.info(request, "Username or password is incorrect")
+        
+    context = {"login_form":login_form}
+
+    return render(request, "accounts/login_required.html", context)
+
+def logout_user(request):
+
+    logout(request)
+
+    return redirect("login")
+
 class HomeView(ListView):
 
     model = SpotifyData
@@ -532,72 +602,3 @@ class TopStreamedSongsChart2(TemplateView):
 
         return context
 
-def register_page(request):
-
-    register_form = CreateUserForm()
-
-    if request.user.is_authenticated:
-        return redirect("home")
-    else:
-        if request.method == "POST":
-            register_form = CreateUserForm(request.POST)
-            if register_form.is_valid():
-                register_form.save()
-                user = register_form.cleaned_data.get("username")
-                messages.success(request, "Account was created for " + user)
-                return redirect("login")
-
-    context = {"register_form":register_form}
-
-    return render(request, "accounts/register.html", context)
-
-def login_page(request):
-
-    login_form = LoginUserForm()
-
-    if request.user.is_authenticated:
-        return redirect("home")
-    else:
-        if request.method == "POST":
-            login_form = LoginUserForm(request.POST)
-            username = request.POST.get("username")
-            password = request.POST.get("password1")
-
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect("home")
-            else:
-                messages.info(request, "Username or password is incorrect")
-        
-    context = {"login_form":login_form}
-
-    return render(request, "accounts/login.html", context)
-
-def login_required(request):
-
-    login_form = LoginUserForm()
-
-    if request.method == "POST":
-        login_form = LoginUserForm(request.POST)
-        username = request.POST.get("username")
-        password = request.POST.get("password1")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect("/songmappopul/")
-        else:
-            messages.info(request, "Username or password is incorrect")
-        
-    context = {"login_form":login_form}
-
-    return render(request, "accounts/login_required.html", context)
-
-def logout_user(request):
-
-    logout(request)
-
-    return redirect("login")

@@ -63,6 +63,7 @@
     </button>
     <div class="dropdown-profile-content">
         <a href="{% url 'logout' %}">{{request.user}}, Logout</a>
+        <a href="{% url 'reset_password' %}">Reset your password</a>
     </div>
 </div>
 {% else %}

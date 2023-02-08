@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import (UserCreationForm, 
+                                        PasswordResetForm, 
+                                        SetPasswordForm)
 
 from .models import *
 
@@ -11,7 +13,33 @@ from spotify_data.models import (Region,
                                  Title,
                                  SpotifyData)
 
-    
+
+
+class CreateUserForm(UserCreationForm):
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+    password1 = forms.CharField(label='Password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    password2 = forms.CharField(label='Repeat password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
+    class Meta:
+        model = User 
+        fields = ["username", "email", "password1", "password2"]
+
+class LoginUserForm(forms.Form):
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+    password1 = forms.CharField(label="Password", widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
+class PassResetForm(PasswordResetForm):
+
+    email = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
+
+class PassSetForm(SetPasswordForm):
+
+    new_password1 = forms.CharField(label="New password", widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    new_password2 = forms.CharField(label="Confirm new password", widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
 class RankChartForm(forms.Form):
 
     start = forms.DateField(widget=forms.DateInput(attrs={'type':'date', 'class':'form_widgets'}), initial="2018-01-01")
@@ -202,21 +230,5 @@ class TopStreamedSongsForm2(forms.Form):
         self.fields['top_streamed'].initial = 10
 
 
-class CreateUserForm(UserCreationForm):
-
-    username = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
-    email = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
-    password1 = forms.CharField(label='Password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
-    password2 = forms.CharField(label='Repeat password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
-
-    class Meta:
-        model = User 
-        fields = ["username", "email", "password1", "password2"]
-
-
-class LoginUserForm(forms.Form):
-
-    username = forms.CharField(widget=forms.TextInput(attrs={'type':'charfield', 'class':'form_widgets'}))
-    password1 = forms.CharField(label='Password', widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
 
 

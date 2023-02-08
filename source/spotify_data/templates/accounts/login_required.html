@@ -11,8 +11,11 @@
     <div class="button_box">
       <button class="button b_green">Log In</button>
     </div>
-    <div class="centering_box">
+    <div class="centering_box_sp">
       <p>Don't have an account? <a class="font_url" href="{% url 'register' %}">Sign Up</a></p>
+    </div>
+    <div class="centering_box_sp">
+      <p>Forgot your password? <a class="font_url" href="{% url 'reset_password' %}">Reset Password</a></p>
     </div>
     <div class="centering_box">
       {% for message in messages %}

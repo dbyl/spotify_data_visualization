@@ -74,3 +74,9 @@
     padding: 5px;
 }
 
+.centering_box_sp {
+    justify-content: center;
+    align-items: left;
+    display:flex;
+    padding: 2px;
+}
