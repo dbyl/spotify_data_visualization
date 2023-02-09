@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import (UserCreationForm, 
                                         PasswordResetForm, 
-                                        SetPasswordForm)
+                                        SetPasswordForm,
+                                        PasswordChangeForm,)
 
 from .models import *
 
@@ -37,8 +38,20 @@ class PassResetForm(PasswordResetForm):
 
 class PassSetForm(SetPasswordForm):
 
-    new_password1 = forms.CharField(label="New password", widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
-    new_password2 = forms.CharField(label="Confirm new password", widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    new_password1 = forms.CharField(label="New password", 
+                                    widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    new_password2 = forms.CharField(label="Confirm new password", 
+                                    widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
+class PassChangeForm(PasswordChangeForm):
+
+    old_password = forms.CharField(label="Old password", 
+                                    widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    new_password1 = forms.CharField(label="New password", 
+                                    widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+    new_password2 = forms.CharField(label="Confirm new password", 
+                                    widget=forms.TextInput(attrs={'type':'password', 'class':'form_widgets'}))
+
 
 class RankChartForm(forms.Form):
 
