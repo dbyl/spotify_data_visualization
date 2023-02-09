@@ -48,6 +48,9 @@ LOGGING = {
     "root": {"handlers": ["console"], "level": "DEBUG"},
 }
 
+LOGIN_URL = 'login'
+
+
 # Application definition
 
 INSTALLED_APPS = [
