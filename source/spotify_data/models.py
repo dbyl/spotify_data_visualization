@@ -1,11 +1,13 @@
 from django.db import models
 
+
 class Region(models.Model):
 
     name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
+
 
 class Rank(models.Model):
 
@@ -14,12 +16,14 @@ class Rank(models.Model):
     def __str__(self):
         return self.name
 
+
 class Chart(models.Model):
 
     name = models.CharField(max_length=8)
 
     def __str__(self):
         return self.name
+
 
 class Artist(models.Model):
 
@@ -28,6 +32,7 @@ class Artist(models.Model):
     def __str__(self):
         return self.name
 
+
 class Title(models.Model):
 
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
@@ -35,7 +40,7 @@ class Title(models.Model):
 
     def __str__(self):
         return f"{self.artist} - {self.name}"
-    
+
 
 class SpotifyData(models.Model):
 
@@ -48,10 +53,16 @@ class SpotifyData(models.Model):
     streams = models.IntegerField()
 
     def __str__(self):
-        return str(self.title) + ", " + str(self.date) + ", " + str(self.artist) \
-            + ", " + str(self.region) + ", " + str(self.chart) + ", " + str(self.streams) 
- 
-    
-
-
-
+        return (
+            str(self.title)
+            + ", "
+            + str(self.date)
+            + ", "
+            + str(self.artist)
+            + ", "
+            + str(self.region)
+            + ", "
+            + str(self.chart)
+            + ", "
+            + str(self.streams)
+        )

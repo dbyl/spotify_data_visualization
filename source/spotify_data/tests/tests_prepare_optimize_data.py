@@ -4,17 +4,16 @@ import numpy as np
 import pandas as pd
 import pytest
 from dask import dataframe as dd
-from spotify_data.constants import (
-    DASK_COLUMNS_TO_CATEGORY,
-    DASK_COLUMNS_TO_DATETIME64,
-    DASK_COLUMNS_TO_DROP,
-    DASK_COLUMNS_TO_INT32,
-    PANDAS_COLUMNS_TO_CATEGORY,
-    PANDAS_COLUMNS_TO_INT32,
-    PANDAS_COLUMNS_TO_TRIM_DATA,
-    UNOPTIMIZABLE_COLUMNS,
-)
-from spotify_data.exceptions import NoFilesException, NotExistingDirectoryException
+from spotify_data.constants import (DASK_COLUMNS_TO_CATEGORY,
+                                    DASK_COLUMNS_TO_DATETIME64,
+                                    DASK_COLUMNS_TO_DROP,
+                                    DASK_COLUMNS_TO_INT32,
+                                    PANDAS_COLUMNS_TO_CATEGORY,
+                                    PANDAS_COLUMNS_TO_INT32,
+                                    PANDAS_COLUMNS_TO_TRIM_DATA,
+                                    UNOPTIMIZABLE_COLUMNS)
+from spotify_data.exceptions import (NoFilesException,
+                                     NotExistingDirectoryException)
 from spotify_data.management.commands.prepare_optimize_data import Command
 
 
