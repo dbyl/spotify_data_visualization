@@ -1,11 +1,9 @@
-import csv
 import datetime
 import logging
 import logging.config
 
 import pandas as pd
 from django.core.management import BaseCommand
-from django.utils import timezone
 from spotify_data.models import Artist, Chart, Rank, Region, SpotifyData, Title
 
 
@@ -67,6 +65,5 @@ class Command(BaseCommand):
                 )
             except Exception as e:
                 bad += 1
-                current_time = datetime.datetime.now()
                 with open("data_load_logging.txt", "w") as bad_row:
                     bad_row.write(f"Error message: {e} \n")

@@ -1,10 +1,12 @@
 from django import forms
-from django.contrib.auth.forms import (PasswordChangeForm, PasswordResetForm,
-                                       SetPasswordForm, UserCreationForm)
+from django.contrib.auth.forms import (
+    PasswordChangeForm,
+    PasswordResetForm,
+    SetPasswordForm,
+    UserCreationForm,
+)
 from django.contrib.auth.models import User
-from spotify_data.models import Artist, Chart, Rank, Region, SpotifyData, Title
-
-from .models import *
+from spotify_data.models import Chart, Rank, Region
 
 
 class CreateUserForm(UserCreationForm):

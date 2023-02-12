@@ -2,30 +2,38 @@ from typing import Any, Dict
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
-from spotify_data.charts import (make_artist_popularity_map,
-                                 make_popularity_chart,
-                                 make_popularity_comparison_chart,
-                                 make_song_popularity_map,
-                                 make_song_rank_changes_chart,
-                                 make_song_rank_changes_comparison_chart,
-                                 make_top_streamed_artist_chart,
-                                 make_top_streamed_artist_comparison_chart,
-                                 make_top_streamed_song_chart,
-                                 make_top_streamed_song_comparison_chart)
+from spotify_data.charts import (
+    make_artist_popularity_map,
+    make_popularity_chart,
+    make_popularity_comparison_chart,
+    make_song_popularity_map,
+    make_song_rank_changes_chart,
+    make_song_rank_changes_comparison_chart,
+    make_top_streamed_artist_chart,
+    make_top_streamed_artist_comparison_chart,
+    make_top_streamed_song_chart,
+    make_top_streamed_song_comparison_chart,
+)
 from spotify_data.constants import REGIONS_ID_ISO
-from spotify_data.forms import (ArtistMapPopularityForm, CreateUserForm,
-                                LoginUserForm, PopularityChartForm,
-                                PopularityChartForm2, RankChart2Form,
-                                RankChartForm, SongMapPopularityForm,
-                                TopStreamedArtistsForm,
-                                TopStreamedArtistsForm2, TopStreamedSongsForm,
-                                TopStreamedSongsForm2)
+from spotify_data.forms import (
+    ArtistMapPopularityForm,
+    CreateUserForm,
+    LoginUserForm,
+    PopularityChartForm,
+    PopularityChartForm2,
+    RankChart2Form,
+    RankChartForm,
+    SongMapPopularityForm,
+    TopStreamedArtistsForm,
+    TopStreamedArtistsForm2,
+    TopStreamedSongsForm,
+    TopStreamedSongsForm2,
+)
 from spotify_data.models import Artist, Region, SpotifyData, Title
 
 

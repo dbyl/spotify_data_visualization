@@ -2,21 +2,19 @@ import logging
 import logging.config
 from pathlib import Path
 
-import pandas as pd
 from dask import dataframe as dd
 from django.core.management.base import BaseCommand
-from spotify_data.constants import (DASK_COLUMNS_TO_CATEGORY,
-                                    DASK_COLUMNS_TO_DATETIME64,
-                                    DASK_COLUMNS_TO_DROP,
-                                    DASK_COLUMNS_TO_INT32,
-                                    PANDAS_COLUMNS_TO_CATEGORY,
-                                    PANDAS_COLUMNS_TO_INT32,
-                                    PANDAS_COLUMNS_TO_TRIM_DATA,
-                                    UNOPTIMIZABLE_COLUMNS)
-from spotify_data.exceptions import (NoFilesException,
-                                     NotExistingDirectoryException,
-                                     WrongFileTypeException)
-from spotify_data.models import SpotifyData
+from spotify_data.constants import (
+    DASK_COLUMNS_TO_CATEGORY,
+    DASK_COLUMNS_TO_DATETIME64,
+    DASK_COLUMNS_TO_DROP,
+    DASK_COLUMNS_TO_INT32,
+    PANDAS_COLUMNS_TO_CATEGORY,
+    PANDAS_COLUMNS_TO_INT32,
+    PANDAS_COLUMNS_TO_TRIM_DATA,
+    UNOPTIMIZABLE_COLUMNS,
+)
+from spotify_data.exceptions import NoFilesException, NotExistingDirectoryException
 
 logger = logging.getLogger(__name__)
 
@@ -125,10 +123,11 @@ class Command(BaseCommand):
         try:
             dataframe.to_csv(f"{Path(output)}/{filename}", sep=",", index=False)
             logging.info(
-                f"Prepared new csv file: {path} - {filename} for {len(dataframe)} spotify_data \n"
+                f"Prepared new csv file: {path} - {filename} \
+                   for {len(dataframe)} spotify_data \n"
             )
             logging.info(dataframe.info(memory_usage="deep"))
-        except OSError as e:
+        except OSError:
             raise NotExistingDirectoryException(
                 "Cannot save file into a non-existent directory"
             )

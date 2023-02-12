@@ -1,14 +1,20 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from django.urls import include, path
+from django.urls import path
 from spotify_data import views
 from spotify_data.forms import PassChangeForm, PassResetForm, PassSetForm
-from spotify_data.views import (ArtistMapPopularity, HomeView, PopularityChart,
-                                PopularityChart2, RankChart, RankChart2,
-                                SongMapPopularity, TopStreamedArtistsChart,
-                                TopStreamedArtistsChart2,
-                                TopStreamedSongsChart, TopStreamedSongsChart2)
+from spotify_data.views import (
+    ArtistMapPopularity,
+    HomeView,
+    PopularityChart,
+    PopularityChart2,
+    RankChart,
+    RankChart2,
+    SongMapPopularity,
+    TopStreamedArtistsChart,
+    TopStreamedArtistsChart2,
+    TopStreamedSongsChart,
+    TopStreamedSongsChart2,
+)
 
 urlpatterns = [
     path("register/", views.register_page, name="register"),
