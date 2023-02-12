@@ -12,18 +12,22 @@ from spotify_data.models import Chart, Rank, Region
 class CreateUserForm(UserCreationForm):
 
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"})
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"})
     )
     email = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"})
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"})
     )
     password1 = forms.CharField(
         label="Password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
     password2 = forms.CharField(
         label="Repeat password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
 
     class Meta:
@@ -34,18 +38,21 @@ class CreateUserForm(UserCreationForm):
 class LoginUserForm(forms.Form):
 
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"})
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"})
     )
     password1 = forms.CharField(
         label="Password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
 
 
 class PassResetForm(PasswordResetForm):
 
     email = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"})
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"})
     )
 
 
@@ -53,11 +60,13 @@ class PassSetForm(SetPasswordForm):
 
     new_password1 = forms.CharField(
         label="New password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
     new_password2 = forms.CharField(
         label="Confirm new password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
 
 
@@ -65,49 +74,60 @@ class PassChangeForm(PasswordChangeForm):
 
     old_password = forms.CharField(
         label="Old password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
     new_password1 = forms.CharField(
         label="New password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
     new_password2 = forms.CharField(
         label="Confirm new password",
-        widget=forms.TextInput(attrs={"type": "password", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "password",
+                                      "class": "form_widgets"}),
     )
 
 
 class RankChartForm(forms.Form):
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     artist = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Drake",
     )
     title = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="God's Plan",
     )
 
     def __init__(self, *args, **kwargs):
         super(RankChartForm, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
@@ -116,42 +136,52 @@ class RankChartForm(forms.Form):
 class RankChart2Form(forms.Form):
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2020-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     artist = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Drake",
     )
     title = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="God's Plan",
     )
     artist_2 = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Billie Eilish",
     )
     title_2 = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="bad guy",
     )
 
     def __init__(self, *args, **kwargs):
         super(RankChart2Form, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
@@ -160,36 +190,45 @@ class RankChart2Form(forms.Form):
 class PopularityChartForm(forms.Form):
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     artist = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Drake",
     )
     top_rank = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
 
     def __init__(self, *args, **kwargs):
         super(PopularityChartForm, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["top_rank"].choices = Rank.objects.values("id").values_list(
+        self.fields["top_rank"].choices = Rank.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
@@ -198,40 +237,50 @@ class PopularityChartForm(forms.Form):
 class PopularityChartForm2(forms.Form):
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     artist = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Drake",
     )
     artist_2 = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Kanye West",
     )
     top_rank = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
 
     def __init__(self, *args, **kwargs):
         super(PopularityChartForm2, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["top_rank"].choices = Rank.objects.values("id").values_list(
+        self.fields["top_rank"].choices = Rank.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
@@ -241,24 +290,29 @@ class PopularityChartForm2(forms.Form):
 class ArtistMapPopularityForm(forms.Form):
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[], 
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     artist = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Drake",
     )
 
     def __init__(self, *args, **kwargs):
         super(ArtistMapPopularityForm, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
 
@@ -266,28 +320,34 @@ class ArtistMapPopularityForm(forms.Form):
 class SongMapPopularityForm(forms.Form):
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     artist = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="Dua Lipa",
     )
     title = forms.CharField(
-        widget=forms.TextInput(attrs={"type": "charfield", "class": "form_widgets"}),
+        widget=forms.TextInput(attrs={"type": "charfield",
+                                      "class": "form_widgets"}),
         initial="New Rules",
     )
 
     def __init__(self, *args, **kwargs):
         super(SongMapPopularityForm, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
 
@@ -306,18 +366,22 @@ class TopStreamedArtistsForm(forms.Form):
     )
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     top_streamed = forms.ChoiceField(
         required=True,
@@ -327,10 +391,12 @@ class TopStreamedArtistsForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(TopStreamedArtistsForm, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
@@ -339,24 +405,30 @@ class TopStreamedArtistsForm(forms.Form):
 
 class TopStreamedArtistsForm2(forms.Form):
 
-    top_choices = ((5, 5), (10, 10), (15, 15), (20, 20), (30, 30), (40, 40), (50, 50))
+    top_choices = ((5, 5), (10, 10), (15, 15),
+                   (20, 20), (30, 30), (40, 40), (50, 50))
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     region_2 = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     top_streamed = forms.ChoiceField(
         required=True,
@@ -366,14 +438,17 @@ class TopStreamedArtistsForm2(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(TopStreamedArtistsForm2, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
-        self.fields["region_2"].choices = Region.objects.values("id").values_list(
+        self.fields["region_2"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region_2"].initial = 67
@@ -394,18 +469,22 @@ class TopStreamedSongsForm(forms.Form):
     )
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     top_streamed = forms.ChoiceField(
         required=True,
@@ -415,10 +494,12 @@ class TopStreamedSongsForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(TopStreamedSongsForm, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
@@ -427,24 +508,30 @@ class TopStreamedSongsForm(forms.Form):
 
 class TopStreamedSongsForm2(forms.Form):
 
-    top_choices = ((5, 5), (10, 10), (15, 15), (20, 20), (30, 30), (40, 40), (50, 50))
+    top_choices = ((5, 5), (10, 10), (15, 15),
+                   (20, 20), (30, 30), (40, 40), (50, 50))
 
     start = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form_widgets"}),
+        widget=forms.DateInput(attrs={"type": "date",
+                                      "class": "form_widgets"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     region_2 = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     chart = forms.ChoiceField(
-        required=True, choices=[], widget=forms.Select(attrs={"class": "form_widgets"})
+        required=True, choices=[],
+        widget=forms.Select(attrs={"class": "form_widgets"})
     )
     top_streamed = forms.ChoiceField(
         required=True,
@@ -454,14 +541,17 @@ class TopStreamedSongsForm2(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(TopStreamedSongsForm2, self).__init__(*args, **kwargs)
-        self.fields["chart"].choices = Chart.objects.values("id").values_list(
+        self.fields["chart"].choices = Chart.objects.values("id")\
+            .values_list(
             "id", "name"
         )
-        self.fields["region"].choices = Region.objects.values("id").values_list(
+        self.fields["region"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region"].initial = 68
-        self.fields["region_2"].choices = Region.objects.values("id").values_list(
+        self.fields["region_2"].choices = Region.objects.values("id")\
+            .values_list(
             "id", "name"
         )
         self.fields["region_2"].initial = 67
