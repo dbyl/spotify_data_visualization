@@ -23,7 +23,11 @@ def make_song_rank_changes_chart(data, s_artist, s_title):
         xaxis_title="Date",
         yaxis_title="Ranking",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -62,7 +66,11 @@ def make_song_rank_changes_comparison_chart(
         xaxis_title="Date",
         yaxis_title="Ranking",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -91,7 +99,11 @@ def make_popularity_chart(titles, s_artist):
         xaxis_title="Titles",
         yaxis_title="Occurance",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -101,12 +113,14 @@ def make_popularity_comparison_chart(titles, titles_2, s_artist, s_artist_2):
 
     titles_counted = Counter(titles)
     titles_counted = dict(
-        sorted(titles_counted.items(), key=lambda item: item[1], reverse=True)
+        sorted(titles_counted.items(),
+               key=lambda item: item[1], reverse=True)
     )
 
     titles_counted_2 = Counter(titles_2)
     titles_counted_2 = dict(
-        sorted(titles_counted_2.items(), key=lambda item: item[1], reverse=True)
+        sorted(titles_counted_2.items(),
+               key=lambda item: item[1], reverse=True)
     )
 
     data_x = list(titles_counted.keys())
@@ -138,7 +152,11 @@ def make_popularity_comparison_chart(titles, titles_2, s_artist, s_artist_2):
         xaxis_title="Titles",
         yaxis_title="Occurance",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -239,7 +257,11 @@ def make_top_streamed_artist_chart(artist_streams, artists_name, region_name):
         xaxis_title="Artists",
         yaxis_title="Streams",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -283,7 +305,11 @@ def make_top_streamed_artist_comparison_chart(
         xaxis_title="Artists",
         yaxis_title="Streams",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -308,7 +334,11 @@ def make_top_streamed_song_chart(song_streams, art_tit_name, region_name):
         xaxis_title="Titles",
         yaxis_title="Streams",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
@@ -352,7 +382,11 @@ def make_top_streamed_song_comparison_chart(
         xaxis_title="Titles",
         yaxis_title="Streams",
         title_x=0.5,
-        legend=dict(orientation="h", yanchor="bottom", y=0.5, xanchor="right", x=1),
+        legend=dict(orientation="h",
+                    yanchor="bottom",
+                    y=0.5,
+                    xanchor="right",
+                    x=1),
     )
 
     return fig
