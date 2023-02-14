@@ -11,40 +11,23 @@ The project consists of two parts:
 1) Spotify Data overview and preparation of charts to be used in the application - that part is completed. 
 2) Implementation of Django and creation usable program allowing the user to decide what data to include in the charts.
 
-## Images from Website 
+## Website features
 
-Home page
-![](images/1_homepage.png)
+Overview of website content
+![](images/website_content.mp4)
 
-Dropdown list of charts
-![](images/1.5_dropdown_charts.png)
+Signing up, loging in and loging out features
+![](images/signup_login_logout.mp4)
 
-Creating an Account page
-![](images/2_register.png)
+Password changing for logged-in users
+![](images/password_changing.mp4)
 
-Creating an Account - validation
-![](images/3_register_validation.png)
+Password changing for logged-in users
+![](images/password_changing.mp4)
 
-Log in page
-![](images/4_login.png)
+Resetting a forgotten password (email link with the form)
 
-Example chart - Popularity Comparison Chart
-![](images/5_songs_in_ranks_comp.png)
-
-Example chart - Ranking Changes
-![](images/6_ranking_changes.png)
-
-Example chart - Top Streamed Artists 
-![](images/7_top_streamed.png)
-
-Example chart - Artist Popularity Map 
-![](images/8_artist_popul.png)
-
-Example chart - Song Popularity Map 
-![](images/9_songs_popul.png)
-
-Each chart/choropleth is interactive
-![](images/10_interactive_charts.png)
+![](images/reset_password.mp4)
 
 
 ## 1 part - Spotify Data Overview 
