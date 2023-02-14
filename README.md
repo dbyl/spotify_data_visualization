@@ -11,40 +11,26 @@ The project consists of two parts:
 1) Spotify Data overview and preparation of charts to be used in the application - that part is completed. 
 2) Implementation of Django and creation usable program allowing the user to decide what data to include in the charts.
 
-## Images from Website 
+## Website features
 
-Home page
-![](images/1_homepage.png)
+Overview of website content
 
-Dropdown list of charts
-![](images/1.5_dropdown_charts.png)
+https://user-images.githubusercontent.com/36920201/218828152-3cf7cf95-1815-4255-9f85-8606a7b48b2a.mp4
 
-Creating an Account page
-![](images/2_register.png)
 
-Creating an Account - validation
-![](images/3_register_validation.png)
+Signing up, loging in and loging out features
 
-Log in page
-![](images/4_login.png)
+https://user-images.githubusercontent.com/36920201/218828421-d2149b9a-e4d0-425c-b942-0327d95c4f55.mp4
 
-Example chart - Popularity Comparison Chart
-![](images/5_songs_in_ranks_comp.png)
 
-Example chart - Ranking Changes
-![](images/6_ranking_changes.png)
+Password changing for logged-in users
 
-Example chart - Top Streamed Artists 
-![](images/7_top_streamed.png)
+https://user-images.githubusercontent.com/36920201/218828537-d2144d21-8b6b-4925-a97a-49e0a557e773.mp4
 
-Example chart - Artist Popularity Map 
-![](images/8_artist_popul.png)
 
-Example chart - Song Popularity Map 
-![](images/9_songs_popul.png)
+Resetting a forgotten password (email link with the form)
 
-Each chart/choropleth is interactive
-![](images/10_interactive_charts.png)
+https://user-images.githubusercontent.com/36920201/218828601-fe1eec30-f3fc-499d-a299-692fb9912e06.mp4
 
 
 ## 1 part - Spotify Data Overview 
@@ -87,9 +73,13 @@ $ source env/bin/activate
 Create a .env file in project root directory (source). The file format can be understood from the example below:
 ```sh
 DEBUG=True
-SECRET_KEY=your-secret-key # generate your own secret key
+SECRET_KEY=your-secret-key #generate your own secret key
 DATABASE_URL=psql://postgres:postgres@database:5432/postgres
 ALLOWED_HOSTS=127.0.0.1,localhost
+#this email will enable you to send a password reset form
+EMAIL=your-email-address 
+EMAIL_PASSWORD=your-email-password
+
 ```
 
 Application runs on docker so docker must be configured *(sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin)* and Docker Desktop must be installed.

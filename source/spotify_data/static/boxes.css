@@ -70,7 +70,13 @@
 .centering_box {
     justify-content: center;
     align-items: center;
-    display:flex;
+    display: flex;
     padding: 5px;
 }
 
+.centering_box_sp {
+    justify-content: left;
+    align-items: center;
+    display: flex;
+    padding: 1px;
+}

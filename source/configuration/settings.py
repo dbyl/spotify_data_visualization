@@ -19,8 +19,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 # Initialise environment variables
 env = environ.Env(
-    #Set casting, default value
-    DEBUG=(bool, False) )
+    # Set casting, default value
+    DEBUG=(bool, False)
+)
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,6 +48,9 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler", "stream": sys.stdout}},
     "root": {"handlers": ["console"], "level": "DEBUG"},
 }
+
+LOGIN_URL = "login"
+
 
 # Application definition
 
@@ -100,7 +104,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -141,3 +144,12 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# SMTP Configuration
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get("EMAIL")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")

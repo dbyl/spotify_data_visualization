@@ -53,6 +53,24 @@
 {% block nav-song-map-chart %}
 <a href="{% url 'song_map_popul' %}">Song Popularity Map</a>
 {% endblock %}
+
+<div class="topnav-right">
+{% block logout1 %}
+{% if user.is_authenticated %}
+<div class="dropdown-profile">
+    <button class="dropbtn-profile">Profile
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-profile-content">
+        <a href="{% url 'logout' %}">{{request.user}}, Logout</a>
+        <a href="{% url 'change_password' %}">Change your password</a>
+    </div>
+</div>
+{% else %}
+<a href="{% url 'logout' %}">Log In</a>
+{% endif %}
+{% endblock %}
+</div>
 </div>
 {% endblock %}
 {% block content %}

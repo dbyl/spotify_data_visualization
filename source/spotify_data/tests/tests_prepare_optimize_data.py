@@ -3,7 +3,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
-from dask import dataframe as dd
 from spotify_data.constants import (
     DASK_COLUMNS_TO_CATEGORY,
     DASK_COLUMNS_TO_DATETIME64,
@@ -12,7 +11,6 @@ from spotify_data.constants import (
     PANDAS_COLUMNS_TO_CATEGORY,
     PANDAS_COLUMNS_TO_INT32,
     PANDAS_COLUMNS_TO_TRIM_DATA,
-    UNOPTIMIZABLE_COLUMNS,
 )
 from spotify_data.exceptions import NoFilesException, NotExistingDirectoryException
 from spotify_data.management.commands.prepare_optimize_data import Command

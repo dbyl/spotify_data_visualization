@@ -6,33 +6,33 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('spotify_data', '0001_initial'),
+        ("spotify_data", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='artist',
-            old_name='artist',
-            new_name='name',
+            model_name="artist",
+            old_name="artist",
+            new_name="name",
         ),
         migrations.RenameField(
-            model_name='chart',
-            old_name='chart',
-            new_name='name',
+            model_name="chart",
+            old_name="chart",
+            new_name="name",
         ),
         migrations.RenameField(
-            model_name='rank',
-            old_name='rank',
-            new_name='name',
+            model_name="rank",
+            old_name="rank",
+            new_name="name",
         ),
         migrations.RenameField(
-            model_name='region',
-            old_name='region',
-            new_name='name',
+            model_name="region",
+            old_name="region",
+            new_name="name",
         ),
         migrations.RenameField(
-            model_name='title',
-            old_name='title',
-            new_name='name',
+            model_name="title",
+            old_name="title",
+            new_name="name",
         ),
     ]
