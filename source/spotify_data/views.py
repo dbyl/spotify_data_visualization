@@ -135,6 +135,7 @@ class HomeView(ListView):
 
 class RankChart(TemplateView):
 
+
     model = SpotifyData
     context_object_name = "rank_changes"
 
@@ -150,7 +151,8 @@ class RankChart(TemplateView):
         s_title = self.request.GET.get("title")
 
         artist_id = (
-            Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist)
+            .values_list("id", flat=True).first()
         )
         title_id = (
             Title.objects.filter(name=s_title, artist_id=artist_id)
@@ -169,16 +171,27 @@ class RankChart(TemplateView):
             chart=chart_id,
         ).values()
 
+
         data = data_filtered.values_list("date", "rank")
 
         fig = make_song_rank_changes_chart(data, s_artist, s_title)
 
         chart = fig.to_html()
 
-        context = {
-            "chart": chart,
-            "rank_chart_form": RankChartForm(),
-        }
+        context = {"chart": chart,
+                   "rank_chart_form": RankChartForm()}
+
+        if self.request.method == 'GET':
+            rank_chart_form = RankChartForm(self.request.GET)
+            if rank_chart_form.is_valid():
+
+                context = {"chart": chart,
+                           "rank_chart_form": RankChartForm(initial={"start": s_start,
+                                                                      "end": s_end,
+                                                                      "region": s_region,
+                                                                      "chart": s_chart,
+                                                                      "artist": s_artist,
+                                                                      "title": s_title})}
 
         return context
 
@@ -202,7 +215,8 @@ class RankChart2(TemplateView):
         s_title_2 = self.request.GET.get("title_2")
 
         artist_id = (
-            Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist)
+            .values_list("id", flat=True).first()
         )
         title_id = (
             Title.objects.filter(name=s_title, artist_id=artist_id)
@@ -211,7 +225,8 @@ class RankChart2(TemplateView):
         )
 
         artist_id_2 = (
-            Artist.objects.filter(name=s_artist_2).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist_2)
+            .values_list("id", flat=True).first()
         )
         title_id_2 = (
             Title.objects.filter(name=s_title_2, artist_id=artist_id_2)
@@ -241,21 +256,28 @@ class RankChart2(TemplateView):
         data = data_filtered.values_list("date", "rank")
         data_2 = data_filtered_2.values_list("date", "rank")
 
-        data_x = [c[0] for c in data.order_by("date")]
-        data_y = [c[1] for c in data.order_by("date")]
-
         fig = make_song_rank_changes_comparison_chart(
             data, data_2, s_artist, s_title, s_artist_2, s_title_2
         )
 
         chart = fig.to_html()
 
-        context = {
-            "chart": chart,
-            "rank_chart_2_form": RankChart2Form(),
-            "x": data_x,
-            "y": data_y,
-        }
+        context = {"chart": chart,
+            "rank_chart_2_form": RankChart2Form()}
+
+        if self.request.method == 'GET':
+            rank_chart_2_form = RankChart2Form(self.request.GET)
+            if rank_chart_2_form.is_valid():
+
+                context = {"chart": chart,
+                           "rank_chart_2_form": RankChart2Form(initial={"start": s_start,
+                                                                      "end": s_end,
+                                                                      "region": s_region,
+                                                                      "chart": s_chart,
+                                                                      "artist": s_artist,
+                                                                      "title": s_title,
+                                                                      "artist_2": s_artist_2,
+                                                                      "title_2": s_title_2})}
 
         return context
 
@@ -277,7 +299,8 @@ class PopularityChart(TemplateView):
         s_rank = self.request.GET.get("top_rank")
 
         artist_id = (
-            Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist)
+            .values_list("id", flat=True).first()
         )
         region_id = s_region
         chart_id = s_chart
@@ -293,7 +316,8 @@ class PopularityChart(TemplateView):
 
         titles_id = [x[0] for x in data_filtered if x[1] <= int(s_rank)]
         titles = [
-            Title.objects.filter(id=x).values_list("name", flat=True).first()
+            Title.objects.filter(id=x)
+            .values_list("name", flat=True).first()
             for x in titles_id
         ]
 
@@ -301,7 +325,20 @@ class PopularityChart(TemplateView):
 
         chart = fig.to_html()
 
-        context = {"chart": chart, "popularity_chart_form": PopularityChartForm()}
+        context = {"chart": chart,
+                   "popularity_chart_form": PopularityChartForm()}
+
+        if self.request.method == 'GET':
+            popularity_chart_form = PopularityChartForm(self.request.GET)
+            if popularity_chart_form.is_valid():
+
+                context = {"chart": chart,
+                           "popularity_chart_form": PopularityChartForm(initial={"start": s_start,
+                                                                                 "end": s_end,
+                                                                                 "region": s_region,
+                                                                                 "chart": s_chart,
+                                                                                 "artist": s_artist,
+                                                                                 "top_rank": s_rank})}
 
         return context
 
@@ -324,10 +361,12 @@ class PopularityChart2(TemplateView):
         s_rank = self.request.GET.get("top_rank")
 
         artist_id = (
-            Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist)
+            .values_list("id", flat=True).first()
         )
         artist_id_2 = (
-            Artist.objects.filter(name=s_artist_2).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist_2)
+            .values_list("id", flat=True).first()
         )
         region_id = s_region
         chart_id = s_chart
@@ -365,7 +404,21 @@ class PopularityChart2(TemplateView):
 
         chart = fig.to_html()
 
-        context = {"chart": chart, "popularity_chart_form_2": PopularityChartForm2()}
+        context = {"chart": chart,
+                   "popularity_chart_form_2": PopularityChartForm2()}
+
+        if self.request.method == 'GET':
+            popularity_chart_form_2 = PopularityChartForm2(self.request.GET)
+            if popularity_chart_form_2.is_valid():
+
+                context = {"chart": chart,
+                           "popularity_chart_form_2": PopularityChartForm2(initial={"start": s_start,
+                                                                                 "end": s_end,
+                                                                                 "region": s_region,
+                                                                                 "chart": s_chart,
+                                                                                 "artist": s_artist,
+                                                                                 "artist_2": s_artist_2,
+                                                                                 "top_rank": s_rank})}
 
         return context
 
@@ -386,7 +439,8 @@ class ArtistMapPopularity(TemplateView):
         chart_id = s_chart
 
         artist_id = (
-            Artist.objects.filter(name=s_artist).values_list("id", flat=True).first()
+            Artist.objects.filter(name=s_artist)
+            .values_list("id", flat=True).first()
         )
 
         data_filtered_artist = list(
@@ -400,7 +454,8 @@ class ArtistMapPopularity(TemplateView):
         )
 
         data_filtered_all_artist = list(
-            SpotifyData.objects.filter(date__range=(s_start, s_end), chart=chart_id)
+            SpotifyData.objects
+            .filter(date__range=(s_start, s_end), chart=chart_id)
             .values_list("region")
             .annotate(streams=Sum("streams"))
             .exclude(region=23)
@@ -437,10 +492,18 @@ class ArtistMapPopularity(TemplateView):
 
         choropleth = fig.to_html()
 
-        context = {
-            "choropleth": choropleth,
-            "artist_map_popularity_form": ArtistMapPopularityForm(),
-        }
+        context = {"choropleth": choropleth,
+                   "artist_map_popularity_form": ArtistMapPopularityForm()}
+
+        if self.request.method == 'GET':
+            artist_map_popularity_form = ArtistMapPopularityForm(self.request.GET)
+            if artist_map_popularity_form.is_valid():
+
+                context = {"choropleth": choropleth,
+                           "artist_map_popularity_form": ArtistMapPopularityForm(initial={"start": s_start,
+                                                                                          "end": s_end,
+                                                                                          "chart": s_chart,
+                                                                                          "artist": s_artist})}
 
         return context
 
@@ -524,10 +587,19 @@ class SongMapPopularity(LoginRequiredMixin, TemplateView):
 
         choropleth = fig.to_html()
 
-        context = {
-            "choropleth": choropleth,
-            "song_map_popularity_form": SongMapPopularityForm(),
-        }
+        context = {"choropleth": choropleth,
+                   "song_map_popularity_form": SongMapPopularityForm()}
+
+        if self.request.method == 'GET':
+            song_map_popularity_form = SongMapPopularityForm(self.request.GET)
+            if song_map_popularity_form.is_valid():
+
+                context = {"choropleth": choropleth,
+                           "artist_map_popularity_form": SongMapPopularityForm(initial={"start": s_start,
+                                                                                          "end": s_end,
+                                                                                          "chart": s_chart,
+                                                                                          "artist": s_artist,
+                                                                                          "title": s_title})}
 
         return context
 
@@ -576,10 +648,19 @@ class TopStreamedArtistsChart(TemplateView):
 
         chart = fig.to_html()
 
-        context = {
-            "chart": chart,
-            "top_streamed_artists_form": TopStreamedArtistsForm(),
-        }
+        context = {"chart": chart,
+                   "top_streamed_artists_form": TopStreamedArtistsForm()}
+
+        if self.request.method == 'GET':
+            top_streamed_artists_form = TopStreamedArtistsForm(self.request.GET)
+            if top_streamed_artists_form.is_valid():
+
+                context = {"chart": chart,
+                           "top_streamed_artists_form": TopStreamedArtistsForm(initial={"start": s_start,
+                                                                                        "end": s_end,
+                                                                                        "region": s_region,
+                                                                                        "chart": s_chart,
+                                                                                        "top_streamed": s_top_streamed})}
 
         return context
 
@@ -656,10 +737,20 @@ class TopStreamedArtistsChart2(TemplateView):
 
         chart = fig.to_html()
 
-        context = {
-            "chart": chart,
-            "top_streamed_artists_form_2": TopStreamedArtistsForm2(),
-        }
+        context = {"chart": chart,
+                   "top_streamed_artists_form_2": TopStreamedArtistsForm2()}
+
+        if self.request.method == 'GET':
+            top_streamed_artists_form_2 = TopStreamedArtistsForm2(self.request.GET)
+            if top_streamed_artists_form_2.is_valid():
+
+                context = {"chart": chart,
+                           "top_streamed_artists_form_2": TopStreamedArtistsForm2(initial={"start": s_start,
+                                                                                           "end": s_end,
+                                                                                           "region": s_region,
+                                                                                           "region_2": s_region_2,
+                                                                                           "chart": s_chart,
+                                                                                           "top_streamed": s_top_streamed})}
 
         return context
 
@@ -716,7 +807,19 @@ class TopStreamedSongsChart(TemplateView):
 
         chart = fig.to_html()
 
-        context = {"chart": chart, "top_streamed_songs_form": TopStreamedSongsForm()}
+        context = {"chart": chart,
+                   "top_streamed_songs_form": TopStreamedSongsForm()}
+
+        if self.request.method == 'GET':
+            top_streamed_songs_form = TopStreamedSongsForm(self.request.GET)
+            if top_streamed_songs_form.is_valid():
+
+                context = {"chart": chart,
+                           "top_streamed_songs_form": TopStreamedSongsForm(initial={"start": s_start,
+                                                                                    "end": s_end,
+                                                                                    "region": s_region,
+                                                                                    "chart": s_chart,
+                                                                                    "top_streamed": s_top_streamed})}
 
         return context
 
@@ -791,8 +894,19 @@ class TopStreamedSongsChart2(TemplateView):
             region_name_2,
         )
 
-        chart = fig.to_html()
+        context = {"chart": chart,
+                   "top_streamed_songs_form_2": TopStreamedSongsForm2()}
 
-        context = {"chart": chart, "top_streamed_songs_form_2": TopStreamedSongsForm2()}
+        if self.request.method == 'GET':
+            top_streamed_songs_form_2 = TopStreamedSongsForm2(self.request.GET)
+            if top_streamed_songs_form_2.is_valid():
+
+                context = {"chart": chart,
+                           "top_streamed_songs_form_2": TopStreamedSongsForm2(initial={"start": s_start,
+                                                                                        "end": s_end,
+                                                                                        "region": s_region,
+                                                                                        "region_2": s_region_2,
+                                                                                        "chart": s_chart,
+                                                                                        "top_streamed": s_top_streamed})}
 
         return context

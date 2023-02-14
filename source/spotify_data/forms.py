@@ -93,12 +93,16 @@ class RankChartForm(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31",}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
@@ -122,6 +126,7 @@ class RankChartForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(RankChartForm, self).__init__(*args, **kwargs)
+        
         self.fields["chart"].choices = Chart.objects.values("id")\
             .values_list(
             "id", "name"
@@ -137,12 +142,16 @@ class RankChart2Form(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2020-01-01",
     )
     region = forms.ChoiceField(
@@ -191,12 +200,16 @@ class PopularityChartForm(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
@@ -238,12 +251,16 @@ class PopularityChartForm2(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
@@ -291,12 +308,16 @@ class ArtistMapPopularityForm(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     chart = forms.ChoiceField(
@@ -321,12 +342,16 @@ class SongMapPopularityForm(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     chart = forms.ChoiceField(
@@ -367,12 +392,16 @@ class TopStreamedArtistsForm(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
@@ -410,12 +439,16 @@ class TopStreamedArtistsForm2(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
@@ -470,12 +503,16 @@ class TopStreamedSongsForm(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
@@ -513,12 +550,16 @@ class TopStreamedSongsForm2(forms.Form):
 
     start = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2018-01-01",
     )
     end = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date",
-                                      "class": "form_widgets"}),
+                                      "class": "form_widgets",
+                                      "min": "2017-01-01",
+                                      "max": "2021-12-31"}),
         initial="2019-01-01",
     )
     region = forms.ChoiceField(
