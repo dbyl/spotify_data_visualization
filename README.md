@@ -15,23 +15,22 @@ The project consists of two parts:
 
 Overview of website content
 
+https://user-images.githubusercontent.com/36920201/218828152-3cf7cf95-1815-4255-9f85-8606a7b48b2a.mp4
 
 
 Signing up, loging in and loging out features
 
-https://user-images.githubusercontent.com/36920201/218828152-3cf7cf95-1815-4255-9f85-8606a7b48b2a.mp4
-
+https://user-images.githubusercontent.com/36920201/218828421-d2149b9a-e4d0-425c-b942-0327d95c4f55.mp4
 
 
 Password changing for logged-in users
-![](images/password_changing.mp4)
 
-Password changing for logged-in users
-![](images/password_changing.mp4)
+https://user-images.githubusercontent.com/36920201/218828537-d2144d21-8b6b-4925-a97a-49e0a557e773.mp4
+
 
 Resetting a forgotten password (email link with the form)
 
-![](images/reset_password.mp4)
+https://user-images.githubusercontent.com/36920201/218828601-fe1eec30-f3fc-499d-a299-692fb9912e06.mp4
 
 
 ## 1 part - Spotify Data Overview 
