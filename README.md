@@ -14,10 +14,11 @@ The project consists of two parts:
 ## Website features
 
 Overview of website content
-![](images/website_content.mp4)
+
+
 
 Signing up, loging in and loging out features
-![](images/signup_login_logout.mp4)
+![website](images/signup_login_logout.mp4)
 
 Password changing for logged-in users
 ![](images/password_changing.mp4)
