@@ -87,9 +87,13 @@ $ source env/bin/activate
 Create a .env file in project root directory (source). The file format can be understood from the example below:
 ```sh
 DEBUG=True
-SECRET_KEY=your-secret-key # generate your own secret key
+SECRET_KEY=your-secret-key #generate your own secret key
 DATABASE_URL=psql://postgres:postgres@database:5432/postgres
 ALLOWED_HOSTS=127.0.0.1,localhost
+#this email will enable you to send a password reset form
+EMAIL=your-email-address 
+EMAIL_PASSWORD=your-email-password
+
 ```
 
 Application runs on docker so docker must be configured *(sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin)* and Docker Desktop must be installed.
