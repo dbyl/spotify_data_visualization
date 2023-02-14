@@ -18,9 +18,10 @@ Overview of website content
 
 
 Signing up, loging in and loging out features
-<video src="images/signup_login_logout.mp4" controls="controls" style="max-width: 730px;">
-</video>
-![website](images/signup_login_logout.mp4)
+
+https://user-images.githubusercontent.com/36920201/218828152-3cf7cf95-1815-4255-9f85-8606a7b48b2a.mp4
+
+
 
 Password changing for logged-in users
 ![](images/password_changing.mp4)
