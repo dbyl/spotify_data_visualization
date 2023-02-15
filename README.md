@@ -30,7 +30,8 @@ https://user-images.githubusercontent.com/36920201/218828537-d2144d21-8b6b-4925-
 
 Resetting a forgotten password (email link with the form)
 
-https://user-images.githubusercontent.com/36920201/218828601-fe1eec30-f3fc-499d-a299-692fb9912e06.mp4
+https://user-images.githubusercontent.com/36920201/218993537-fe834fb8-caac-4ee3-9171-8c07c2879966.mp4
+
 
 
 ## 1 part - Spotify Data Overview 
